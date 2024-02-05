@@ -1,0 +1,1 @@
+@docker run --rm -it -v %cd%:/usr/src/ -w /usr/src/ golang:latest go %*
