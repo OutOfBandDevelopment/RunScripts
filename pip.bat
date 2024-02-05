@@ -6,4 +6,4 @@
 -v python-pip-cache:/root/.cache/pip/ ^
 -v python-__pycache__:/usr/local/lib/python3.12/ ^
 -w /usr/src/ ^
-python:latest python %*
+python:latest pip %*
