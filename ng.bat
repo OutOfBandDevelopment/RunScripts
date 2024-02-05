@@ -10,6 +10,6 @@
 -v node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ ^
 -w /root/src/ ^
 -p 8080:8080 %EXTRA_DOCKER_COMMANDS% ^
-node:latest node %*
+node:latest ng %*
 SET LAST_ERROR=%ERRORLEVEL%
 EXIT /B %ERRORLEVEL%

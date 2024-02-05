@@ -4,4 +4,5 @@
 -v %cd%:/usr/src/ ^
 -v rust-rustup:/usr/local/rustup/ ^
 -w /usr/src/ ^
+-p 8080:8080 %EXTRA_DOCKER_COMMANDS% ^
 rust:latest rustup %*
