@@ -3,6 +3,7 @@ SETLOCAL
 
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
 IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
+
 @docker run --rm -it ^
 -v %cd%:/usr/src/ ^
 -w /usr/src/  ^

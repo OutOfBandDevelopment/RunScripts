@@ -4,9 +4,9 @@ SETLOCAL
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
 IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
 
-@docker volume create node-home.npm
-@docker volume create node-usr-local-bin
-@docker volume create node-usr-local-lib-node_modules
+@docker volume create node-home.npm >NUL 2>&1
+@docker volume create node-usr-local-bin >NUL 2>&1
+@docker volume create node-usr-local-lib-node_modules >NUL 2>&1
 @docker run --rm -it ^
 -v %cd%:/root/src/ ^
 -v node-home.npm:/root/.npm/ ^

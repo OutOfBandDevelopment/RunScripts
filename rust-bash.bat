@@ -4,7 +4,7 @@ SETLOCAL
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
 IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
 
-@docker volume create rust-rustup
+@docker volume create rust-rustup >NUL 2>&1
 @docker run --rm -it ^
 -v %cd%:/usr/src/ ^
 -v rust-rustup:/usr/local/rustup/ ^
