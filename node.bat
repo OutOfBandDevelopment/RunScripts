@@ -1,5 +1,9 @@
+@ECHO OFF
+SETLOCAL
 
-@echo off
+IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
+IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
+
 @docker volume create node-home.npm
 @docker volume create node-usr-local-bin
 @docker volume create node-usr-local-lib-node_modules
@@ -11,5 +15,11 @@
 -w /root/src/ ^
 -p 8080:8080 %EXTRA_DOCKER_COMMANDS% ^
 node:latest node %*
+
 SET LAST_ERROR=%ERRORLEVEL%
+
+IF EXIST %CD%\after_docker.cmd CALL %CD%\after_docker.cmd
+IF EXIST %CD%\after_docker.bat CALL %CD%\after_docker.bat
+
+ENDLOCAL
 EXIT /B %ERRORLEVEL%
