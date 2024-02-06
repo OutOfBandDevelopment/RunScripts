@@ -17,7 +17,7 @@ docker run --rm -it \
 -v node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ \
 -p 8080:8080 $EXTRA_DOCKER_COMMANDS \
 -w /usr/src/ \
-node:latest node "$@"
+node:latest node $@
 
 LAST_ERROR=$?
 

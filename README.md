@@ -14,7 +14,8 @@ windows (ie python.exe)
 If you have memory issues with WSL you might be interested in this [config](https://gist.github.com/mwwhited/6a959dc323c858bf854de7ff045dc0c0)
 
 You might need to fix up permissions on OS-X and Linux.  Within this folder execute
-`chmod +x * && chmod -x *.bat && chmod -x LICENSE` to add execute to the commands if not assigned
+`chmod +x * && chmod -x *.bat && chmod -x LICENSE && chmod -x *.md` to add execute 
+to the commands if not assigned
 
 ## Extensions
 

@@ -15,7 +15,7 @@ docker run --rm -it \
 -v ruby-usr-local:/usr/local/ \
 -p 8080:8080 $EXTRA_DOCKER_COMMANDS \
 -w /usr/src/ \
-ruby:latest rake "$@"
+ruby:latest rake $@
 
 LAST_ERROR=$?
 

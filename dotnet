@@ -7,12 +7,17 @@ if [ -f "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
-# docker volume create create node-home.npm >/dev/null 2>&1
+docker volume create dotnet-root-dotnet >/dev/null 2>&1
+docker volume create dotnet-local-nuget >/dev/null 2>&1
+docker volume create dotnet-nuget >/dev/null 2>&1
 docker run --rm -it \
 -v "$(pwd)":/usr/src/ \
+-v dotnet-root-dotnet:/root/.dotnet/ \
+-v dotnet-local-nuget:/root/.local/NuGet/ \
+-v dotnet-local-nuget:/root/.nuget/ \
 -p 8080:8080 $EXTRA_DOCKER_COMMANDS \
 -w /usr/src/ \
-mcr.microsoft.com/dotnet/sdk dotnet "$@"
+mcr.microsoft.com/dotnet/sdk dotnet $@
 
 LAST_ERROR=$?
 

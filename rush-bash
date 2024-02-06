@@ -13,7 +13,7 @@ docker run --rm -it \
 -v rust-rustup:/usr/local/rustup/ \
 -p 8080:8080 $EXTRA_DOCKER_COMMANDS \
 -w /usr/src/ \
-rust:latest bash "$@"
+rust:latest bash $@
 
 LAST_ERROR=$?
 

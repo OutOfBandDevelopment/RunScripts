@@ -11,7 +11,7 @@ docker run --rm -it \
 -v "$(pwd)":/usr/src/ \
 -p 8080:80 $EXTRA_DOCKER_COMMANDS \
 -w /usr/src/ \
-php:7.2-apache  "$@"
+php:7.2-apache  $@
 
 LAST_ERROR=$?
 
