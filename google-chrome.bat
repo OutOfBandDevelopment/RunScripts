@@ -16,7 +16,7 @@ docker run --rm -it ^
 -v /run/desktop/mnt/host/wslg:/mnt/wslg ^
 -v google-chrome-cache:/root/.cache/google-chrome ^
 -v google-chrome-config:/root/.config/google-chrome %EXTRA_DOCKER_COMMANDS% ^
-oobdev/google-chrome
+oobdev/google-chrome google-chrome --no-sandbox %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 

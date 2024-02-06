@@ -11,6 +11,8 @@ on your system.
 You might need to disable entry points in the `manage app execution aliases` for
 windows (ie python.exe)
 
+If you have memory issues with WSL you might be interested in this [config](https://gist.github.com/mwwhited/6a959dc323c858bf854de7ff045dc0c0)
+
 ## Extensions
 
 ### Pre/Post execution
