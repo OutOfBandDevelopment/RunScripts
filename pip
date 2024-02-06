@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ -f "$PWD/before_docker.sh" ]; then
+    source "$PWD/before_docker.sh"
+fi
+if [ -f "$PWD/before_docker.sh" ]; then
+    source "$PWD/before_docker.sh"
+fi
+
+docker volume create python-pip-cache >/dev/null 2>&1
+docker volume create python-pycache >/dev/null 2>&1
+docker run --rm -it \
+-v "$(pwd)":/usr/src/ \
+-v python-pip-cache:/root/.cache/pip/ \
+-v python-__pycache__:/usr/local/lib/python3.12/ \
+-p 8080:8080 $EXTRA_DOCKER_COMMANDS \
+-w /usr/src/ \
+python:latest pip "$@"
+
+LAST_ERROR=$?
+
+if [ -f "$PWD/after_docker.sh" ]; then
+    source "$PWD/after_docker.sh"
+fi
+if [ -f "$PWD/after_docker.sh" ]; then
+    source "$PWD/after_docker.sh"
+fi
+
+exit $LAST_ERROR
