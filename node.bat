@@ -1,4 +1,4 @@
-@ECHO OFF
+REM @ECHO OFF
 SETLOCAL
 
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
