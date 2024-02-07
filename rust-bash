@@ -6,15 +6,13 @@ fi
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-docker volume create ruby-root-local > /dev/null 2>&1
-docker volume create ruby-usr-local > /dev/null 2>&1
+docker volume create rust-rustup > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
 -v $PWD:/usr/src/ \
--v ruby-root-local:/root/.local/ \
--v ruby-usr-local:/usr/local/ \
+-v rust-rustup:/usr/local/rustup/ \
 -w /usr/src/ \
 -p 8080:8080 \
-ruby:latest rails $@
+rust:latest bash $@
 
 LAST_ERROR=$?
 

@@ -1,22 +1,25 @@
 #!/bin/bash
 
-if [ -f "$PWD/before_docker.sh" ]; then
+if [ -e "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
-docker volume create create ruby-root-local >/dev/null 2>&1
-docker volume create create ruby-usr-local >/dev/null 2>&1
-docker run --rm -it \
--v "$(pwd)":/usr/src/ \
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker volume create ruby-root-local > /dev/null 2>&1
+docker volume create ruby-usr-local > /dev/null 2>&1
+docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+-v $PWD:/usr/src/ \
 -v ruby-root-local:/root/.local/ \
 -v ruby-usr-local:/usr/local/ \
--p 8080:8080 $EXTRA_DOCKER_COMMANDS \
 -w /usr/src/ \
+-p 8080:8080 \
 ruby:latest ruby $@
 
 LAST_ERROR=$?
 
-if [ -f "$PWD/after_docker.sh" ]; then
+if [ -e "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi
+
 exit $LAST_ERROR

@@ -1,18 +1,20 @@
 #!/bin/bash
 
-if [ -f "$PWD/before_docker.sh" ]; then
+if [ -e "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
-docker run --rm -it \
--v "$(pwd)":/usr/src/ \
--p 8080:80 $EXTRA_DOCKER_COMMANDS \
--w /usr/src/ \
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+-v $PWD:/var/www/html/ \
+-w /var/www/html/ \
+-p 8080:80 \
 php:7.2-apache  $@
 
 LAST_ERROR=$?
 
-if [ -f "$PWD/after_docker.sh" ]; then
+if [ -e "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi
 

@@ -1,24 +1,26 @@
 #!/bin/bash
 
-if [ -f "$PWD/before_docker.sh" ]; then
+if [ -e "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
-docker volume create dotnet-root-dotnet >/dev/null 2>&1
-docker volume create dotnet-local-nuget >/dev/null 2>&1
-docker volume create dotnet-nuget >/dev/null 2>&1
-docker run --rm -it \
--v "$(pwd)":/usr/src/ \
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker volume create dotnet-root-dotnet > /dev/null 2>&1
+docker volume create dotnet-local-nuget > /dev/null 2>&1
+docker volume create dotnet-nuget > /dev/null 2>&1
+docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+-v $PWD:/usr/src/ \
 -v dotnet-root-dotnet:/root/.dotnet/ \
 -v dotnet-local-nuget:/root/.local/NuGet/ \
--v dotnet-local-nuget:/root/.nuget/ \
--p 8080:8080 $EXTRA_DOCKER_COMMANDS \
+-v dotnet-nuget:/root/.nuget/ \
 -w /usr/src/ \
+-p 8080:8080 \
 mcr.microsoft.com/dotnet/sdk dotnet $@
 
 LAST_ERROR=$?
 
-if [ -f "$PWD/after_docker.sh" ]; then
+if [ -e "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi
 

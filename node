@@ -1,24 +1,26 @@
 #!/bin/bash
 
-if [ -f "$PWD/before_docker.sh" ]; then
+if [ -e "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
-docker volume create create node-home.npm >/dev/null 2>&1
-docker volume create create node-usr-local-bin >/dev/null 2>&1
-docker volume create create node-usr-local-lib-node_modules >/dev/null 2>&1
-docker run --rm -it \
--v "$(pwd)":/usr/src/ \
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker volume create node-home.npm > /dev/null 2>&1
+docker volume create node-usr-local-bin > /dev/null 2>&1
+docker volume create node-usr-local-lib-node_modules > /dev/null 2>&1
+docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+-v $PWD:/root/src/ \
 -v node-home.npm:/root/.npm/ \
 -v node-usr-local-bin:/usr/local/bin/ \
 -v node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ \
--p 8080:8080 $EXTRA_DOCKER_COMMANDS \
--w /usr/src/ \
+-w /root/src/ \
+-p 8080:8080 \
 node:latest node $@
 
 LAST_ERROR=$?
 
-if [ -f "$PWD/after_docker.sh" ]; then
+if [ -e "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi
 

@@ -1,32 +1,26 @@
 #!/bin/bash
 
-# Check if before_docker.sh exists and execute it if present
 if [ -e "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
-# Set SCRIPT_ROOT to the directory of the script
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Build docker image
-docker build -t oobdev/google-chrome -f "$SCRIPT_ROOT/MorePower/DockerFile.google-chrome" "$SCRIPT_ROOT"
-
-# Create docker volumes
+docker build -t oobdev/google-chrome -f $SCRIPT_ROOT/MorePower/DockerFile.google-chrome "$SCRIPT_ROOT"
 docker volume create google-chrome-cache > /dev/null 2>&1
 docker volume create google-chrome-config > /dev/null 2>&1
-
-# Run docker container
-docker run --rm -it \
+docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+-v $PWD:/root/src \
 -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix \
 -v /run/desktop/mnt/host/wslg:/mnt/wslg \
 -v google-chrome-cache:/root/.cache/google-chrome \
--v google-chrome-config:/root/.config/google-chrome $EXTRA_DOCKER_COMMANDS \
-oobdev/google-chrome google-chrome --no-sandbox "$@"
+-v google-chrome-config:/root/.config/google-chrome %EXTRA_DOCKER_COMMANDS% \
+-w /root/src \
+-p 8080:80 \
+oobdev/google-chrome google-chrome --no-sandbox $@
 
-# Store exit code
 LAST_ERROR=$?
 
-# Check if after_docker.sh exists and execute it if present
 if [ -e "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi
