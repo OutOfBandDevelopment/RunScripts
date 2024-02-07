@@ -1,0 +1,1 @@
+docker image remove php:7.2-apache 

@@ -1,0 +1,1 @@
+docker image remove openjdk:latest 

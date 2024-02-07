@@ -1,0 +1,10 @@
+CALL purge-rust.bat
+CALL purge-ruby.bat
+CALL purge-dotnet.bat
+CALL purge-golang.bat
+CALL purge-java.bat
+CALL purge-node.bat
+CALL purge-python.bat
+CALL purge-php.bat
+CALL purge-php-apache.bat
+CALL purge-google-chrome.bat
