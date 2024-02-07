@@ -8,19 +8,18 @@ SET SCRIPT_ROOT=%~dp0
 {{#if docker_file }}
 docker build -t {{ container }} -f %SCRIPT_ROOT%MorePower\DockerFile.google-chrome %SCRIPT_ROOT%
 {{/if}}
-
-docker volume create google-chrome-cache >NUL 2>&1
-docker volume create google-chrome-config >NUL 2>&1
-
+{{#each create_volumes}}
+docker volume create {{@key}} >NUL 2>&1
+{{/each}}
 docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 {{#each volumes}}
---volume {{@key}}:{{this}} ^
+-v {{@key}}:{{this}} ^
 {{/each}}
 {{#if working_directory}}
---workdir {{working_directory}} ^
+-w {{working_directory}} ^
 {{/if}}
 {{#each ports}}
---expose {{@key}}:{{this}} ^
+-p {{@key}}:{{this}} ^
 {{/each}}
 {{ container }} {{ command }} %*
 

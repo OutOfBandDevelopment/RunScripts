@@ -7,7 +7,7 @@ const yamlData = fs.readFileSync('command_def.yaml', 'utf8');
 const data = yaml.load(yamlData);
 
 // Define Handlebars template
-const source = fs.readFileSync('command_script.bat.hbs', 'utf8');
+const source = fs.readFileSync('command_script.hbs', 'utf8');
 
 // Compile the template
 const template = Handlebars.compile(source);
@@ -21,7 +21,7 @@ data.platforms.forEach(platform => {
   if ('docker_file' in platform) {
     platform.docker_file = platform.docker_file.replace('{SCRIPT_ROOT}', '%SCRIPT_ROOT%').replace('/', '\\')
   }
-  //console.log(platform.name, platform);
+  console.log(`platform: ${platform.name}: `, platform);
 
   platform.commands.forEach(command => {
     let sourceData = deepClone(platform);
@@ -32,16 +32,17 @@ data.platforms.forEach(platform => {
       sourceData.command = value;
     }
 
+    var create_volumes = {};
     var volumes = {};
     for (const [idx, obj] of Object.entries(platform.volumes)) {
       for (const [key, value] of Object.entries(obj)) {
-        if (key === 'CURRENT_DIRECTORY') {
-          volumes['%cd%'] = value;
-        } else {
-          volumes[key] = value;
-        }
+        if (key !== 'no_create')
+          volumes[key === 'CURRENT_DIRECTORY' ? '%cd%' : key] = value;
+        if (!obj.no_create)
+          create_volumes[key] = value;
       }
     }
+    sourceData.create_volumes = create_volumes;
     sourceData.volumes = volumes;
 
     if ('ports' in platform) {
@@ -58,10 +59,11 @@ data.platforms.forEach(platform => {
 
     const filename = `/usr/src/templates/${sourceData.command_file}.bat`;
 
-    // console.log(platform.name, sourceData);
+    console.log(`sourceData: ${sourceData.command_file}: `, sourceData);
 
     const result = template(sourceData);
-    console.log(filename, result);
+    //console.log(filename, result);
+    fs.writeFileSync(filename, result);
 
   });
 

@@ -5,6 +5,7 @@ platforms:
   working_directory: /usr/src/  
   volumes:
   - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
   - rust-rustup: /usr/local/rustup/
   commands:
   - cargo: cargo
@@ -19,6 +20,7 @@ platforms:
   working_directory: /usr/src/  
   volumes:
   - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
   - ruby-root-local: /root/.local/ 
   - ruby-usr-local: /usr/local/
   commands:
@@ -36,9 +38,10 @@ platforms:
   working_directory: /usr/src/  
   volumes:
   - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
   - dotnet-root-dotnet: /root/.dotnet/
   - dotnet-local-nuget: /root/.local/NuGet/
-  - dotnet-local-nuget: /root/.nuget/
+  - dotnet-nuget: /root/.nuget/
   commands:
   - dotnet: dotnet
   - dotnet-bash: bash
@@ -50,6 +53,7 @@ platforms:
   working_directory: /usr/src/  
   volumes:
   - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
   - go-pkg: /go/pkg 
   - go-build-cache: /root/.cache/go-build
   commands:
@@ -63,6 +67,7 @@ platforms:
   working_directory: /usr/src/  
   volumes:
   - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
   commands:
   - java: java
   - javac: javac
@@ -72,9 +77,10 @@ platforms:
   
 - name: node
   container: node:latest  
-  working_directory: /usr/src/  
+  working_directory: /root/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /root/src/
+    no_create: true
   - node-home.npm: /root/.npm/
   - node-usr-local-bin: /usr/local/bin/
   - node-usr-local-lib-node_modules: /usr/local/lib/node_modules/
@@ -91,6 +97,7 @@ platforms:
   working_directory: /usr/src/  
   volumes:
   - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
   - python-pip-cache: /root/.cache/pip/
   - python-__pycache__: /usr/local/lib/python3.12/
   commands:
@@ -105,6 +112,7 @@ platforms:
   working_directory: /usr/src/  
   volumes:
   - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
   commands:
   - php: php
   - php-bash: bash
@@ -116,9 +124,10 @@ platforms:
   working_directory: /var/www/html/ 
   volumes:
   - CURRENT_DIRECTORY: /var/www/html/
+    no_create: true
   commands:
-  - php: php
-  - php-bash: bash
+  - php-apache: 
+  - php-apache-bash: bash
   ports:
   - 8080: 80
   
@@ -128,12 +137,15 @@ platforms:
   working_directory: /root/src 
   volumes:
   - CURRENT_DIRECTORY: /root/src 
+    no_create: true
   - /run/desktop/mnt/host/wslg/.X11-unix: /tmp/.X11-unix
+    no_create: true
   - /run/desktop/mnt/host/wslg: /mnt/wslg
+    no_create: true
   - google-chrome-cache: /root/.cache/google-chrome
   - google-chrome-config: /root/.config/google-chrome %EXTRA_DOCKER_COMMANDS%
   commands:
-  - google-chrome: google-chrome
+  - google-chrome: google-chrome --no-sandbox
   - google-chrome-bash: bash
   ports:
   - 8080: 80
