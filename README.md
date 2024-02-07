@@ -34,8 +34,6 @@ these are `before_docker.sh` and `after_docker.cmd`.
 If you want to add extra parameters to the docker command for your script just
 set the environment variable `EXTRA_DOCKER_COMMANDS` to the desired parameters.
 
-Note, the port 8080 has been exported by default on these scripts.
-
 ## Known Issues
 
 Currently the X11 scripts are only configured to work with WSL on windows.  

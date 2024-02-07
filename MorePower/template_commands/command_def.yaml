@@ -12,8 +12,8 @@ platforms:
   - rust-bash: bash
   - rustc: rustc
   - rustup: rustup
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
 
 - name: ruby
   container: ruby:latest    
@@ -28,10 +28,12 @@ platforms:
   - ruby-bash: bash
   - rake: rake
   - rails: rails
-  - rails-server: rails server -p 8080 -b 0.0.0.0
+  - rails-server: rails server -p 80 -b 0.0.0.0
+    ports:
+    - 8080: 80
   - gem: gem
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
   
 - name: dotnet
   container: mcr.microsoft.com/dotnet/sdk   
@@ -45,8 +47,8 @@ platforms:
   commands:
   - dotnet: dotnet
   - dotnet-bash: bash
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
   
 - name: golang
   container: golang:latest  
@@ -59,8 +61,8 @@ platforms:
   commands:
   - go: go
   - go-bash: bash
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
   
 - name: java
   container: openjdk:latest  
@@ -72,8 +74,8 @@ platforms:
   - java: java
   - javac: javac
   - java-bash: bash
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
   
 - name: node
   container: node:latest  
@@ -89,8 +91,8 @@ platforms:
   - ng: ng
   - npm: npm
   - node-bash: bash
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
   
 - name: python
   container: python:latest  
@@ -104,8 +106,8 @@ platforms:
   - python: python
   - pip: pip
   - python-bash: bash
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
   
 - name: php
   container: php:latest  
@@ -116,8 +118,8 @@ platforms:
   commands:
   - php: php
   - php-bash: bash
-  ports:
-  - 8080: 8080
+  # ports:
+  # - 8080: 8080
   
 - name: php-apache
   container: php:7.2-apache
@@ -147,5 +149,5 @@ platforms:
   commands:
   - google-chrome: google-chrome --no-sandbox
   - google-chrome-bash: bash
-  ports:
-  - 8080: 80
+  # ports:
+  # - 8080: 80

@@ -42,12 +42,12 @@ function buildCommandScripts(input, platform, template, script_path) {
   let sourceData = {};
   platform.commands.forEach(command => {
     sourceData = deepClone(platform);
-    sourceData.commands = undefined;
-
-    for (const [key, value] of Object.entries(command)) {
-      sourceData.command_file = key;
-      sourceData.command = value;
-    }
+    delete sourceData.commands;
+    
+    sourceData.command_file = command.name || Object.keys(command)[0];
+    sourceData.command = command.cmd || command[sourceData.command_file];
+    
+    //console.log(`>>>>> cmd`, platform, command, Object.keys(command)[0], sourceData)
 
     var create_volumes = {};
     var volumes = {};
@@ -62,14 +62,20 @@ function buildCommandScripts(input, platform, template, script_path) {
     sourceData.create_volumes = create_volumes;
     sourceData.volumes = volumes;
 
+    sourceData.ports = {};
     if ('ports' in platform) {
-      var ports = {};
       for (const [idx, obj] of Object.entries(platform.ports)) {
         for (const [key, value] of Object.entries(obj)) {
-          ports[key] = value;
+          sourceData.ports[key] = value;
         }
       }
-      sourceData.ports = ports;
+    }
+    if ('ports' in command) {
+      for (const [idx, obj] of Object.entries(command.ports)) {
+        for (const [key, value] of Object.entries(obj)) {
+          sourceData.ports[key] = value;
+        }
+      }
     }
 
     const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
@@ -87,7 +93,6 @@ function buildCommandScripts(input, platform, template, script_path) {
 function scriptBuilder(
   input
 ) {
-
   const yamlData = fs.readFileSync(input.templateData, 'utf8');
   const data = yaml.load(yamlData);
 
@@ -112,11 +117,11 @@ function scriptBuilder(
     console.log(`platform: ${platform.name}: `, platform);
     
     const sourceData = buildCommandScripts(input, platform, template, script_path);
-    const purge_command = buildPurgeScript(input, platform, sourceData, purgeTemplate, script_path);
-    purge_commands.push(purge_command);
+    // const purge_command = buildPurgeScript(input, platform, sourceData, purgeTemplate, script_path);
+    // purge_commands.push(purge_command);
   });
   
-  buildPurgeAll(input, purge_commands);
+  //buildPurgeAll(input, purge_commands);
 }
 
 // build batch files
