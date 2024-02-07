@@ -13,7 +13,7 @@ function deepClone(obj) {
 }
 
 function buildPurgeAll(input, purge_commands) {
-  const result = purge_commands.map(m=>(input.scriptExtension ==='' ? '': 'CALL ') + m).join(os.platform() === 'win32' ? '\r\n' : '\n');
+  const result = purge_commands.map(m=>(input.isDosPaths ? 'CALL ' : '') + m).join(os.platform() === 'win32' ? '\r\n' : '\n');
   
   const script_out_file = `purge-all${input.scriptExtension}`;
   console.log(`---: ${script_out_file} :---------------------------------------`);      
