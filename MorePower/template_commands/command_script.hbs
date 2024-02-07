@@ -6,7 +6,7 @@ IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
 SET SCRIPT_ROOT=%~dp0
 
 {{#if docker_file }}
-docker build -t {{ container }} -f %SCRIPT_ROOT%MorePower\DockerFile.google-chrome %SCRIPT_ROOT%
+docker build -t {{ container }} -f {{ docker_file }} %SCRIPT_ROOT%
 {{/if}}
 {{#each create_volumes}}
 docker volume create {{@key}} >NUL 2>&1
