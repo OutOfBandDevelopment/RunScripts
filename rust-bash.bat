@@ -10,7 +10,6 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v %cd%:/usr/src/ ^
 -v rust-rustup:/usr/local/rustup/ ^
 -w /usr/src/ ^
--p 8080:8080 ^
 rust:latest bash %*
 
 SET LAST_ERROR=%ERRORLEVEL%

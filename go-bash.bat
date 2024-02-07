@@ -12,7 +12,6 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v go-pkg:/go/pkg ^
 -v go-build-cache:/root/.cache/go-build ^
 -w /usr/src/ ^
--p 8080:8080 ^
 golang:latest bash %*
 
 SET LAST_ERROR=%ERRORLEVEL%

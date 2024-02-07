@@ -12,7 +12,6 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v python-pip-cache:/root/.cache/pip/ ^
 -v python-pycache:/usr/local/lib/python3.12/ ^
 -w /usr/src/ ^
--p 8080:8080 ^
 python:latest bash %*
 
 SET LAST_ERROR=%ERRORLEVEL%

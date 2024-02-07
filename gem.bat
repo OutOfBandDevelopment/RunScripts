@@ -12,7 +12,6 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v ruby-root-local:/root/.local/ ^
 -v ruby-usr-local:/usr/local/ ^
 -w /usr/src/ ^
--p 8080:8080 ^
 ruby:latest gem %*
 
 SET LAST_ERROR=%ERRORLEVEL%

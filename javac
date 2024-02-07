@@ -9,7 +9,6 @@ SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
 -v $PWD:/usr/src/ \
 -w /usr/src/ \
--p 8080:8080 \
 openjdk:latest javac $@
 
 LAST_ERROR=$?

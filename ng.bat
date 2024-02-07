@@ -14,7 +14,6 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v node-usr-local-bin:/usr/local/bin/ ^
 -v node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ ^
 -w /root/src/ ^
--p 8080:8080 ^
 node:latest ng %*
 
 SET LAST_ERROR=%ERRORLEVEL%

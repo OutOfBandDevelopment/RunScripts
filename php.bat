@@ -8,7 +8,6 @@ SET SCRIPT_ROOT=%~dp0
 docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v %cd%:/usr/src/ ^
 -w /usr/src/ ^
--p 8080:8080 ^
 php:latest php %*
 
 SET LAST_ERROR=%ERRORLEVEL%

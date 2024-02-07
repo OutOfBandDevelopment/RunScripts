@@ -12,8 +12,8 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v ruby-root-local:/root/.local/ ^
 -v ruby-usr-local:/usr/local/ ^
 -w /usr/src/ ^
--p 8080:8080 ^
-ruby:latest rails server -p 8080 -b 0.0.0.0 %*
+-p 8080:80 ^
+ruby:latest rails server -p 80 -b 0.0.0.0 %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 

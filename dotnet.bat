@@ -14,7 +14,6 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v dotnet-local-nuget:/root/.local/NuGet/ ^
 -v dotnet-nuget:/root/.nuget/ ^
 -w /usr/src/ ^
--p 8080:8080 ^
 mcr.microsoft.com/dotnet/sdk dotnet %*
 
 SET LAST_ERROR=%ERRORLEVEL%

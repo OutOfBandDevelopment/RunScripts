@@ -15,7 +15,6 @@ docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v google-chrome-cache:/root/.cache/google-chrome ^
 -v google-chrome-config:/root/.config/google-chrome %EXTRA_DOCKER_COMMANDS% ^
 -w /root/src ^
--p 8080:80 ^
 oobdev/google-chrome google-chrome --no-sandbox %*
 
 SET LAST_ERROR=%ERRORLEVEL%
