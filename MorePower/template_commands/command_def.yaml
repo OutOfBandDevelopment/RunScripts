@@ -81,7 +81,7 @@ platforms:
   volumes:
   - CURRENT_DIRECTORY: /root/src/
     no_create: true
-  - node-home.npm: /root/.npm/
+  - node-home-npm: /root/.npm/
   - node-usr-local-bin: /usr/local/bin/
   - node-usr-local-lib-node_modules: /usr/local/lib/node_modules/
   commands:
@@ -99,7 +99,7 @@ platforms:
   - CURRENT_DIRECTORY: /usr/src/
     no_create: true
   - python-pip-cache: /root/.cache/pip/
-  - python-__pycache__: /usr/local/lib/python3.12/
+  - python-pycache: /usr/local/lib/python3.12/
   commands:
   - python: python
   - pip: pip

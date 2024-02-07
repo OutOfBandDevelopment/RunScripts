@@ -6,11 +6,11 @@ IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
 SET SCRIPT_ROOT=%~dp0
 
 docker volume create python-pip-cache >NUL 2>&1
-docker volume create python-__pycache__ >NUL 2>&1
+docker volume create python-pycache >NUL 2>&1
 docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v %cd%:/usr/src/ ^
 -v python-pip-cache:/root/.cache/pip/ ^
--v python-__pycache__:/usr/local/lib/python3.12/ ^
+-v python-pycache:/usr/local/lib/python3.12/ ^
 -w /usr/src/ ^
 -p 8080:8080 ^
 python:latest bash %*

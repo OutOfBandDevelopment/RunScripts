@@ -7,11 +7,11 @@ fi
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 docker volume create python-pip-cache > /dev/null 2>&1
-docker volume create python-__pycache__ > /dev/null 2>&1
+docker volume create python-pycache > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
 -v $PWD:/usr/src/ \
 -v python-pip-cache:/root/.cache/pip/ \
--v python-__pycache__:/usr/local/lib/python3.12/ \
+-v python-pycache:/usr/local/lib/python3.12/ \
 -w /usr/src/ \
 -p 8080:8080 \
 python:latest pip $@
