@@ -3,9 +3,6 @@
 if [ -f "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
-if [ -f "$PWD/before_docker.sh" ]; then
-    source "$PWD/before_docker.sh"
-fi
 
 docker volume create create node-home.npm >/dev/null 2>&1
 docker volume create create node-usr-local-bin >/dev/null 2>&1
@@ -21,9 +18,6 @@ node:latest node $@
 
 LAST_ERROR=$?
 
-if [ -f "$PWD/after_docker.sh" ]; then
-    source "$PWD/after_docker.sh"
-fi
 if [ -f "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi

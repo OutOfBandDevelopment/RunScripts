@@ -23,7 +23,8 @@ to the commands if not assigned
 
 If you want to run commands before these scripts you can create a file in your
 working directory named `before_docker.bat` or `before_docker.cmd`.  To run
-commands after use `after_docker.bat` or `after_docker.cmd`.
+commands after use `after_docker.bat` or `after_docker.cmd`.  On Linux or OS-X
+these are `before_docker.sh` and `after_docker.cmd`.
 
 ### Extension Parameters
 

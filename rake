@@ -3,9 +3,6 @@
 if [ -f "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
-if [ -f "$PWD/before_docker.sh" ]; then
-    source "$PWD/before_docker.sh"
-fi
 
 docker volume create create ruby-root-local >/dev/null 2>&1
 docker volume create create ruby-usr-local >/dev/null 2>&1
@@ -19,9 +16,6 @@ ruby:latest rake $@
 
 LAST_ERROR=$?
 
-if [ -f "$PWD/after_docker.sh" ]; then
-    source "$PWD/after_docker.sh"
-fi
 if [ -f "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi

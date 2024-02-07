@@ -3,9 +3,6 @@
 if [ -f "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
-if [ -f "$PWD/before_docker.sh" ]; then
-    source "$PWD/before_docker.sh"
-fi
 
 docker volume create create rust-rustup >/dev/null 2>&1
 docker run --rm -it \
@@ -17,9 +14,6 @@ rust:latest rustc $@
 
 LAST_ERROR=$?
 
-if [ -f "$PWD/after_docker.sh" ]; then
-    source "$PWD/after_docker.sh"
-fi
 if [ -f "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
 fi

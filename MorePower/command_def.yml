@@ -1,0 +1,124 @@
+
+platforms:
+- name: rust
+  container: rust:latest    
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  - rust-rustup: /usr/local/rustup/
+  commands:
+  - cargo: cargo
+  - rust-bash: bash
+  - rustc: rustc
+  - rustup: rustup
+
+- name: ruby
+  container: ruby:latest    
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  - ruby-root-local: /root/.local/ 
+  - ruby-usr-local: /usr/local/
+  commands:
+  - ruby: ruby
+  - ruby-bash: bash
+  - rake: rake
+  - rails: rails
+  - rails-server: rails server -p 8080 -b 0.0.0.0
+  - gem: gem
+  ports:
+  - 8080: 8080
+  
+- name: dotnet
+  container: mcr.microsoft.com/dotnet/sdk   
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  - dotnet-root-dotnet: /root/.dotnet/
+  - dotnet-local-nuget: /root/.local/NuGet/
+  - dotnet-local-nuget: /root/.nuget/
+  commands:
+  - dotnet: dotnet
+  - dotnet-bash: bash
+  ports:
+  - 8080: 8080
+  
+- name: golang
+  container: golang:latest  
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  - go-pkg: /go/pkg 
+  - go-build-cache: /root/.cache/go-build
+  commands:
+  - go: go
+  - go-bash: bash
+  ports:
+  - 8080: 8080
+  
+- name: java
+  container: openjdk:latest  
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  commands:
+  - java: java
+  - javac: javac
+  - java-bash: bash
+  ports:
+  - 8080: 8080
+  
+- name: node
+  container: node:latest  
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  - node-home.npm: /root/.npm/
+  - node-usr-local-bin: /usr/local/bin/
+  - node-usr-local-lib-node_modules: /usr/local/lib/node_modules/
+  commands:
+  - node: node
+  - ng: ng
+  - npm: npm
+  - node-bash: bash
+  ports:
+  - 8080: 8080
+  
+- name: python
+  container: python:latest  
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  - python-pip-cache: /root/.cache/pip/
+  - python-__pycache__: /usr/local/lib/python3.12/
+  commands:
+  - python: python
+  - pip: pip
+  - python-bash: bash
+  ports:
+  - 8080: 8080
+  
+- name: php
+  container: php:latest  
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+  commands:
+  - php: php
+  - php-bash: bash
+  ports:
+  - 8080: 8080
+  
+- name: php-apache
+  container: php:7.2-apache
+  working_directory: /var/www/html/ 
+  volumes:
+  - CURRENT_DIRECTORY: /var/www/html/
+  commands:
+  - php: php
+  - php-bash: bash
+  ports:
+  - 8080: 80
+
+# google-chrome-bash.bat
+# google-chrome.bat
