@@ -119,6 +119,19 @@ platforms:
   - php-bash: bash
   ports:
   - 8080: 80
-
-# google-chrome-bash.bat
-# google-chrome.bat
+  
+- name: google-chrome
+  container: oobdev/google-chrome
+  docker_file: "{SCRIPT_ROOT}MorePower/DockerFile.google-chrome"
+  working_directory: /root/src 
+  volumes:
+  - CURRENT_DIRECTORY: /root/src 
+  - /run/desktop/mnt/host/wslg/.X11-unix: /tmp/.X11-unix
+  - /run/desktop/mnt/host/wslg: /mnt/wslg
+  - google-chrome-cache: /root/.cache/google-chrome
+  - google-chrome-config: /root/.config/google-chrome %EXTRA_DOCKER_COMMANDS%
+  commands:
+  - google-chrome: google-chrome
+  - google-chrome-bash: bash
+  ports:
+  - 8080: 80

@@ -16,4 +16,4 @@ IF EXIST %CD%\after_docker.cmd CALL %CD%\after_docker.cmd
 IF EXIST %CD%\after_docker.bat CALL %CD%\after_docker.bat
 
 ENDLOCAL
-EXIT /B %ERRORLEVEL%
+EXIT /B %LAST_ERROR%
