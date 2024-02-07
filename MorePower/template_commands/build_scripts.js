@@ -6,6 +6,84 @@ const os = require('os');
 console.log('Hostname:',  os.hostname());
 console.log('Operating System Platform:', os.platform());
 
+const script_path = os.platform() === 'win32' ? process.cwd() + "\\..\\..\\" : "/usr/src/templates/";
+
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function buildPurgeAll(input, purge_commands) {
+  const result = purge_commands.map(m=>(input.scriptExtension ==='' ? '': 'CALL ') + m).join(os.platform() === 'win32' ? '\r\n' : '\n');
+  
+  const script_out_file = `purge-all${input.scriptExtension}`;
+  console.log(`---: ${script_out_file} :---------------------------------------`);      
+  const filename = `${script_path}${script_out_file}`;
+  console.log(`sourceData: purge-all: ${filename}`, purge_commands);
+  
+  fs.writeFileSync(filename, result);
+}
+
+function buildPurgeScript(input, platform, sourceData, template, script_path) {    
+  sourceData.command_file = 'purge-' + platform.name;
+  
+  const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
+  console.log(`---: ${script_out_file} :---------------------------------------`);      
+  const filename = `${script_path}${script_out_file}`;
+  console.log(`sourceData: ${sourceData.command_file}: ${filename}`, sourceData);
+
+  const result = template(sourceData);
+  //console.log(filename, result);
+  fs.writeFileSync(filename, result);
+
+  return script_out_file;
+};
+
+function buildCommandScripts(input, platform, template, script_path) {
+  let sourceData = {};
+  platform.commands.forEach(command => {
+    sourceData = deepClone(platform);
+    sourceData.commands = undefined;
+
+    for (const [key, value] of Object.entries(command)) {
+      sourceData.command_file = key;
+      sourceData.command = value;
+    }
+
+    var create_volumes = {};
+    var volumes = {};
+    for (const [idx, obj] of Object.entries(platform.volumes)) {
+      for (const [key, value] of Object.entries(obj)) {
+        if (key !== 'no_create')
+          volumes[key === 'CURRENT_DIRECTORY' ? input.currentPathVariable : key] = value;
+        if (!obj.no_create)
+          create_volumes[key] = value;
+      }
+    }
+    sourceData.create_volumes = create_volumes;
+    sourceData.volumes = volumes;
+
+    if ('ports' in platform) {
+      var ports = {};
+      for (const [idx, obj] of Object.entries(platform.ports)) {
+        for (const [key, value] of Object.entries(obj)) {
+          ports[key] = value;
+        }
+      }
+      sourceData.ports = ports;
+    }
+
+    const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
+    console.log(`---: ${script_out_file} :---------------------------------------`);      
+    const filename = `${script_path}${script_out_file}`;
+    console.log(`sourceData: ${sourceData.command_file}: ${filename}`, sourceData);
+
+    const result = template(sourceData);
+    //console.log(filename, result);
+    fs.writeFileSync(filename, result);
+  });
+  return sourceData;
+}
+
 function scriptBuilder(
   input
 ) {
@@ -14,11 +92,12 @@ function scriptBuilder(
   const data = yaml.load(yamlData);
 
   const source = fs.readFileSync(input.templateSource, 'utf8');
-  const template = Handlebars.compile(source);
+  const template = Handlebars.compile(source);  
 
-  function deepClone(obj) {
-    return JSON.parse(JSON.stringify(obj));
-  }
+  const purgeSource = fs.readFileSync(input.purgeTemplateSource, 'utf8');
+  const purgeTemplate = Handlebars.compile(purgeSource);  
+
+  let purge_commands = [];
 
   data.platforms.forEach(platform => {
     console.log(`===: ${platform.name} :=======================================`);
@@ -31,52 +110,13 @@ function scriptBuilder(
       }
     }
     console.log(`platform: ${platform.name}: `, platform);
-
-    platform.commands.forEach(command => {
-      let sourceData = deepClone(platform);
-      sourceData.commands = undefined;
-
-      for (const [key, value] of Object.entries(command)) {
-        sourceData.command_file = key;
-        sourceData.command = value;
-      }
-
-      var create_volumes = {};
-      var volumes = {};
-      for (const [idx, obj] of Object.entries(platform.volumes)) {
-        for (const [key, value] of Object.entries(obj)) {
-          if (key !== 'no_create')
-            volumes[key === 'CURRENT_DIRECTORY' ? input.currentPathVariable : key] = value;
-          if (!obj.no_create)
-            create_volumes[key] = value;
-        }
-      }
-      sourceData.create_volumes = create_volumes;
-      sourceData.volumes = volumes;
-
-      if ('ports' in platform) {
-        var ports = {};
-        for (const [idx, obj] of Object.entries(platform.ports)) {
-          for (const [key, value] of Object.entries(obj)) {
-            ports[key] = value;
-          }
-        }
-        sourceData.ports = ports;
-      }
-
-      console.log(`---: ${sourceData.command_file}${input.scriptExtension} :---------------------------------------`);
-      
-      const script_path = os.platform() === 'win32' ? process.cwd() + "\\..\\..\\" : "/usr/src/templates/";
-      const filename = `${script_path}${sourceData.command_file}${input.scriptExtension}`;
-
-      console.log(`sourceData: ${sourceData.command_file}: ${filename}`, sourceData);
-
-      const result = template(sourceData);
-      //console.log(filename, result);
-      fs.writeFileSync(filename, result);
-
-    });
+    
+    const sourceData = buildCommandScripts(input, platform, template, script_path);
+    const purge_command = buildPurgeScript(input, platform, sourceData, purgeTemplate, script_path);
+    purge_commands.push(purge_command);
   });
+  
+  buildPurgeAll(input, purge_commands);
 }
 
 // build batch files
@@ -86,7 +126,8 @@ scriptBuilder({
   'scriptRootVariable':  '%SCRIPT_ROOT%',
   'isDosPaths': true,
   'currentPathVariable':   '%cd%',
-  'scriptExtension': '.bat'
+  'scriptExtension': '.bat',
+  'purgeTemplateSource': 'purge_script.hbs'
 });
 
 // build bash files
@@ -96,6 +137,7 @@ scriptBuilder({
   'scriptRootVariable':  '$SCRIPT_ROOT/',
   'isDosPaths': false,
   'currentPathVariable':   '$PWD',
-  'scriptExtension': ''
+  'scriptExtension': '',
+  'purgeTemplateSource': 'purge_script.hbs'
 });
 

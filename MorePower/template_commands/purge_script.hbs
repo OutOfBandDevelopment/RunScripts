@@ -1,0 +1,4 @@
+{{#each create_volumes}}
+docker volume remove {{@key}}
+{{/each}}
+docker image remove {{ container }} 
