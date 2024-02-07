@@ -151,3 +151,18 @@ platforms:
   - google-chrome-bash: bash
   # ports:
   # - 8080: 80
+  
+- name: haskell
+  container: haskell:latest  
+  working_directory: /usr/src/  
+  volumes:
+  - CURRENT_DIRECTORY: /usr/src/
+    no_create: true
+  commands:
+  - haskell: ghc
+  - ghc: ghc
+  - runhaskell: runhaskell
+  - haskell-stack: stack
+  - haskell-bash: bash
+  # ports:
+  # - 8080: 8080

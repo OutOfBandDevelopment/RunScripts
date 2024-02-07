@@ -117,11 +117,11 @@ function scriptBuilder(
     console.log(`platform: ${platform.name}: `, platform);
     
     const sourceData = buildCommandScripts(input, platform, template, script_path);
-    // const purge_command = buildPurgeScript(input, platform, sourceData, purgeTemplate, script_path);
-    // purge_commands.push(purge_command);
+    const purge_command = buildPurgeScript(input, platform, sourceData, purgeTemplate, script_path);
+    purge_commands.push(purge_command);
   });
   
-  //buildPurgeAll(input, purge_commands);
+  buildPurgeAll(input, purge_commands);
 }
 
 // build batch files

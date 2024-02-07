@@ -8,3 +8,4 @@ purge-python
 purge-php
 purge-php-apache
 purge-google-chrome
+purge-haskell

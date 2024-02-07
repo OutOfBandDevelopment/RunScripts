@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -e "$PWD/before_docker.sh" ]; then
+    source "$PWD/before_docker.sh"
+fi
+
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+-v $PWD:/usr/src/ \
+-w /usr/src/ \
+haskell:latest runhaskell $@
+
+LAST_ERROR=$?
+
+if [ -e "$PWD/after_docker.sh" ]; then
+    source "$PWD/after_docker.sh"
+fi
+
+exit $LAST_ERROR
