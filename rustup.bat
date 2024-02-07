@@ -3,13 +3,14 @@ SETLOCAL
 
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
 IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
+SET SCRIPT_ROOT=%~dp0
 
-@docker volume create rust-rustup >NUL 2>&1
-@docker run --rm -it ^
+docker volume create rust-rustup >NUL 2>&1
+docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v %cd%:/usr/src/ ^
 -v rust-rustup:/usr/local/rustup/ ^
 -w /usr/src/ ^
--p 8080:8080 %EXTRA_DOCKER_COMMANDS% ^
+-p 8080:8080 ^
 rust:latest rustup %*
 
 SET LAST_ERROR=%ERRORLEVEL%

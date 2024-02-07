@@ -3,11 +3,12 @@ SETLOCAL
 
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
 IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
+SET SCRIPT_ROOT=%~dp0
 
-@docker run --rm -it ^
+docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v %cd%:/usr/src/ ^
--w /usr/src/  ^
--p 8080:8080 %EXTRA_DOCKER_COMMANDS% ^
+-w /usr/src/ ^
+-p 8080:8080 ^
 openjdk:latest javac %*
 
 SET LAST_ERROR=%ERRORLEVEL%

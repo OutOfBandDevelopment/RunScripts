@@ -3,15 +3,16 @@ SETLOCAL
 
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
 IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
+SET SCRIPT_ROOT=%~dp0
 
-@docker volume create ruby-root-local >NUL 2>&1
-@docker volume create ruby-usr-local  >NUL 2>&1
-@docker run --rm -it ^
+docker volume create ruby-root-local >NUL 2>&1
+docker volume create ruby-usr-local >NUL 2>&1
+docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v %cd%:/usr/src/ ^
 -v ruby-root-local:/root/.local/ ^
 -v ruby-usr-local:/usr/local/ ^
 -w /usr/src/ ^
--p 8080:8080 %EXTRA_DOCKER_COMMANDS% ^
+-p 8080:8080 ^
 ruby:latest rake %*
 
 SET LAST_ERROR=%ERRORLEVEL%

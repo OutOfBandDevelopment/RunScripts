@@ -3,12 +3,12 @@ SETLOCAL
 
 IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
 IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
+SET SCRIPT_ROOT=%~dp0
 
-@docker run --rm -it ^
--v %cd%:/root/src/ ^
+docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
 -v %cd%:/usr/src/ ^
 -w /usr/src/ ^
--p 8080:8080 %EXTRA_DOCKER_COMMANDS% ^
+-p 8080:8080 ^
 php:latest bash %*
 
 SET LAST_ERROR=%ERRORLEVEL%
