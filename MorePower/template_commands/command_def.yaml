@@ -91,6 +91,8 @@ platforms:
   - ng: ng
   - npm: npm
   - node-bash: bash
+  - npx: npx
+  - ts-node: ts-node # npm install -g ts-node typescript '@types/node'
   # ports:
   # - 8080: 8080
   
