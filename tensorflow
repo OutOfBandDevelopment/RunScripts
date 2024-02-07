@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ -e "$PWD/before_docker.sh" ]; then
+    source "$PWD/before_docker.sh"
+fi
+
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker build -t oobdev/tensorflow -f $SCRIPT_ROOT/MorePower/DockerFile.tensorflow-jupyterlab "$SCRIPT_ROOT"
+docker volume create tensorflow-keras-models > /dev/null 2>&1
+docker volume create tensorflow-keras-temp > /dev/null 2>&1
+docker volume create tensorflow-root-jupyter > /dev/null 2>&1
+docker volume create tensorflow-root-cache > /dev/null 2>&1
+docker volume create tensorflow-root-ipython > /dev/null 2>&1
+docker volume create tensorflow-root-local > /dev/null 2>&1
+docker volume create tensorflow-usr > /dev/null 2>&1
+docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+-v $PWD:/tensorflow/src \
+-v tensorflow-keras-models:/keras \
+-v tensorflow-keras-temp:/tmp/.keras \
+-v tensorflow-root-jupyter:/root/.jupyter \
+-v tensorflow-root-cache:/root/.cache \
+-v tensorflow-root-ipython:/root/.ipython \
+-v tensorflow-root-local:/root/.local \
+-v tensorflow-usr:/usr \
+-w /tensorflow/src \
+-p 8888:8888 \
+oobdev/tensorflow  $@
+
+LAST_ERROR=$?
+
+if [ -e "$PWD/after_docker.sh" ]; then
+    source "$PWD/after_docker.sh"
+fi
+
+exit $LAST_ERROR

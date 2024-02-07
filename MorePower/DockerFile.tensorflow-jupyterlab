@@ -1,0 +1,12 @@
+# This assumes the container is running on a system with a CUDA GPU
+FROM tensorflow/tensorflow:latest
+# FROM tensorflow/tensorflow:latest-gpu
+
+WORKDIR /tensorflow/src
+
+ENV KERAS_HOME=/keras
+RUN pip install -U jupyterlab pandas matplotlib
+
+EXPOSE 8888
+
+ENTRYPOINT ["jupyter", "lab","--ip=0.0.0.0","--allow-root","--no-browser"]

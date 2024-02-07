@@ -168,3 +168,24 @@ platforms:
   - haskell-bash: bash
   # ports:
   # - 8080: 8080
+  
+- name: tensorflow
+  container: oobdev/tensorflow
+  docker_file: "{SCRIPT_ROOT}MorePower/DockerFile.tensorflow-jupyterlab"
+  working_directory: /tensorflow/src 
+  volumes:
+  - CURRENT_DIRECTORY: /tensorflow/src 
+    no_create: true
+  - tensorflow-keras-models: /keras
+  - tensorflow-keras-temp: /tmp/.keras
+  - tensorflow-root-jupyter: /root/.jupyter
+  - tensorflow-root-cache: /root/.cache
+  - tensorflow-root-ipython: /root/.ipython
+  - tensorflow-root-local: /root/.local
+  - tensorflow-usr: /usr
+  commands:
+  - tensorflow: ""
+    ports:
+    - 8888: 8888
+  - tensorflow-bash: bash
+  

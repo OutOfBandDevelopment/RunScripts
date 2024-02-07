@@ -9,3 +9,4 @@ CALL purge-php.bat
 CALL purge-php-apache.bat
 CALL purge-google-chrome.bat
 CALL purge-haskell.bat
+CALL purge-tensorflow.bat
