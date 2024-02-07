@@ -5,21 +5,10 @@ ENV WAYLAND_DISPLAY wayland-0
 ENV XDG_RUNTIME_DIR /mnt/wslg/runtime-dir
 ENV PULSE_SERVER /mnt/wslg/PulseServer
 
-# ENV PGID 1000
-# ENV UGID 1000
-
-# RUN groupadd --gid 1000 docker
-# RUN useradd --create-home --uid 1000 --gid 1000 docker
-
 RUN apt update
 RUN apt install wget -y
 RUN cd /tmp
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt install --fix-missing ./google-chrome-stable_current_amd64.deb -y 
 
-# USER docker
-# WORKDIR /home/docker
-
-# CMD ["google-chrome"] 
 CMD ["google-chrome", "--no-sandbox"] 
-#CMD ["bash"]

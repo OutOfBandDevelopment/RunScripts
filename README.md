@@ -6,6 +6,9 @@ This collection of scripts will allow running these various commands from docker
 allowing these to be ran acting local without actually installing these platforms
 on your system.
 
+The mappings are defined in [command_def.yaml](./MorePower/template_commands/command_def.yaml)
+The `.js` and `.hbs` files in the same directory may be used generate additional commands
+
 ## Notes
 
 You might need to disable entry points in the `manage app execution aliases` for
@@ -31,4 +34,10 @@ these are `before_docker.sh` and `after_docker.cmd`.
 If you want to add extra parameters to the docker command for your script just
 set the environment variable `EXTRA_DOCKER_COMMANDS` to the desired parameters.
 
-Note, the port 8080 has been exported by default on these scripts. 
+Note, the port 8080 has been exported by default on these scripts.
+
+## Known Issues
+
+Currently the X11 scripts are only configured to work with WSL on windows.  
+It is possible to make these work under Linux and OS-X but that hasn't been 
+tested yet.
