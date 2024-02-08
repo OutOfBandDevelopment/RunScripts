@@ -20,6 +20,8 @@ You might need to fix up permissions on OS-X and Linux.  Within this folder exec
 `chmod +x * && chmod -x *.bat && chmod -x LICENSE && chmod -x *.md` to add execute 
 to the commands if not assigned
 
+If you need to fix up the file format `find . -type f -print0 | xargs -0 dos2unix`
+
 ## Extensions
 
 ### Pre/Post execution
