@@ -15,7 +15,7 @@ docker volume create tensorflow-root-ipython > /dev/null 2>&1
 docker volume create tensorflow-root-local > /dev/null 2>&1
 docker volume create tensorflow-usr > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
--v $PWD:/tensorflow/src \
+-v $PWD:/tensorflow/src/ \
 -v tensorflow-keras-models:/keras \
 -v tensorflow-keras-temp:/tmp/.keras \
 -v tensorflow-root-jupyter:/root/.jupyter \
@@ -23,7 +23,7 @@ docker run --rm -it $EXTRA_DOCKER_COMMANDS \
 -v tensorflow-root-ipython:/root/.ipython \
 -v tensorflow-root-local:/root/.local \
 -v tensorflow-usr:/usr \
--w /tensorflow/src \
+-w /tensorflow/src/ \
 oobdev/tensorflow bash $@
 
 LAST_ERROR=$?

@@ -10,11 +10,11 @@ docker volume create dotnet-root-dotnet > /dev/null 2>&1
 docker volume create dotnet-local-nuget > /dev/null 2>&1
 docker volume create dotnet-nuget > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
--v $PWD:/usr/src/ \
+-v $PWD:/current/src/ \
 -v dotnet-root-dotnet:/root/.dotnet/ \
 -v dotnet-local-nuget:/root/.local/NuGet/ \
 -v dotnet-nuget:/root/.nuget/ \
--w /usr/src/ \
+-w /current/src/ \
 mcr.microsoft.com/dotnet/sdk bash $@
 
 LAST_ERROR=$?

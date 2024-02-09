@@ -8,9 +8,9 @@ SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 docker volume create rust-rustup > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
--v $PWD:/usr/src/ \
+-v $PWD:/current/src/ \
 -v rust-rustup:/usr/local/rustup/ \
--w /usr/src/ \
+-w /current/src/ \
 rust:latest bash $@
 
 LAST_ERROR=$?

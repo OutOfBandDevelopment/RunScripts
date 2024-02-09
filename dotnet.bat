@@ -1,25 +1,27 @@
 @ECHO OFF
 SETLOCAL
 
-IF EXIST %CD%\before_docker.cmd CALL %CD%\before_docker.cmd
-IF EXIST %CD%\before_docker.bat CALL %CD%\before_docker.bat
+IF EXIST "%CD%\before_docker.cmd" CALL "%CD%\before_docker.cmd"
+IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat"
 SET SCRIPT_ROOT=%~dp0
 
 docker volume create dotnet-root-dotnet >NUL 2>&1
 docker volume create dotnet-local-nuget >NUL 2>&1
 docker volume create dotnet-nuget >NUL 2>&1
-docker run --rm -it %EXTRA_DOCKER_COMMANDS% ^
--v %cd%:/usr/src/ ^
--v dotnet-root-dotnet:/root/.dotnet/ ^
--v dotnet-local-nuget:/root/.local/NuGet/ ^
--v dotnet-nuget:/root/.nuget/ ^
--w /usr/src/ ^
+docker run --rm %EXTRA_DOCKER_COMMANDS% ^
+--interactive ^
+--tty ^
+--volume %cd%:/current/src/ ^
+--volume dotnet-root-dotnet:/root/.dotnet/ ^
+--volume dotnet-local-nuget:/root/.local/NuGet/ ^
+--volume dotnet-nuget:/root/.nuget/ ^
+--workdir /current/src/ ^
 mcr.microsoft.com/dotnet/sdk dotnet %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 
-IF EXIST %CD%\after_docker.cmd CALL %CD%\after_docker.cmd
-IF EXIST %CD%\after_docker.bat CALL %CD%\after_docker.bat
+IF EXIST "%CD%\after_docker.cmd" CALL "%CD%\after_docker.cmd"
+IF EXIST "%CD%\after_docker.bat" CALL "%CD%\after_docker.bat"
 
 ENDLOCAL
 EXIT /B %LAST_ERROR%

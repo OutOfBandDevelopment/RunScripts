@@ -6,15 +6,15 @@ fi
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-docker volume create node-home-npm > /dev/null 2>&1
+docker volume create node-home > /dev/null 2>&1
 docker volume create node-usr-local-bin > /dev/null 2>&1
 docker volume create node-usr-local-lib-node_modules > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
--v $PWD:/root/src/ \
--v node-home-npm:/root/.npm/ \
+-v $PWD:/current/src/ \
+-v node-home:/root/ \
 -v node-usr-local-bin:/usr/local/bin/ \
 -v node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ \
--w /root/src/ \
+-w /current/src/ \
 node:latest node $@
 
 LAST_ERROR=$?

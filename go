@@ -9,10 +9,10 @@ SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker volume create go-pkg > /dev/null 2>&1
 docker volume create go-build-cache > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
--v $PWD:/usr/src/ \
+-v $PWD:/current/src/ \
 -v go-pkg:/go/pkg \
 -v go-build-cache:/root/.cache/go-build \
--w /usr/src/ \
+-w /current/src/ \
 golang:latest go $@
 
 LAST_ERROR=$?

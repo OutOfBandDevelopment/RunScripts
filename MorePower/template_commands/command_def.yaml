@@ -2,9 +2,9 @@
 platforms:
 - name: rust
   container: rust:latest    
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   - rust-rustup: /usr/local/rustup/
   commands:
@@ -17,9 +17,9 @@ platforms:
 
 - name: ruby
   container: ruby:latest    
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   - ruby-root-local: /root/.local/ 
   - ruby-usr-local: /usr/local/
@@ -37,9 +37,9 @@ platforms:
   
 - name: dotnet
   container: mcr.microsoft.com/dotnet/sdk   
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   - dotnet-root-dotnet: /root/.dotnet/
   - dotnet-local-nuget: /root/.local/NuGet/
@@ -52,9 +52,9 @@ platforms:
   
 - name: golang
   container: golang:latest  
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   - go-pkg: /go/pkg 
   - go-build-cache: /root/.cache/go-build
@@ -66,9 +66,9 @@ platforms:
   
 - name: java
   container: openjdk:latest  
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   commands:
   - java: java
@@ -79,11 +79,11 @@ platforms:
   
 - name: node
   container: node:latest  
-  working_directory: /root/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /root/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
-  - node-home-npm: /root/.npm/
+  - node-home: /root/
   - node-usr-local-bin: /usr/local/bin/
   - node-usr-local-lib-node_modules: /usr/local/lib/node_modules/
   commands:
@@ -98,9 +98,9 @@ platforms:
   
 - name: python
   container: python:latest  
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   - python-pip-cache: /root/.cache/pip/
   - python-pycache: /usr/local/lib/python3.12/
@@ -113,9 +113,9 @@ platforms:
   
 - name: php
   container: php:latest  
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   commands:
   - php: php
@@ -138,9 +138,9 @@ platforms:
 - name: google-chrome
   container: oobdev/google-chrome
   docker_file: "{SCRIPT_ROOT}MorePower/DockerFile.google-chrome"
-  working_directory: /root/src 
+  working_directory: /current/src/ 
   volumes:
-  - CURRENT_DIRECTORY: /root/src 
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   - /run/desktop/mnt/host/wslg/.X11-unix: /tmp/.X11-unix
     no_create: true
@@ -156,9 +156,9 @@ platforms:
   
 - name: haskell
   container: haskell:latest  
-  working_directory: /usr/src/  
+  working_directory: /current/src/  
   volumes:
-  - CURRENT_DIRECTORY: /usr/src/
+  - CURRENT_DIRECTORY: /current/src/
     no_create: true
   commands:
   - haskell: ghc
@@ -172,9 +172,9 @@ platforms:
 - name: tensorflow
   container: oobdev/tensorflow
   docker_file: "{SCRIPT_ROOT}MorePower/DockerFile.tensorflow-jupyterlab"
-  working_directory: /tensorflow/src 
+  working_directory: /tensorflow/src/
   volumes:
-  - CURRENT_DIRECTORY: /tensorflow/src 
+  - CURRENT_DIRECTORY: /tensorflow/src/
     no_create: true
   - tensorflow-keras-models: /keras
   - tensorflow-keras-temp: /tmp/.keras

@@ -10,12 +10,12 @@ docker build -t oobdev/google-chrome -f $SCRIPT_ROOT/MorePower/DockerFile.google
 docker volume create google-chrome-cache > /dev/null 2>&1
 docker volume create google-chrome-config > /dev/null 2>&1
 docker run --rm -it $EXTRA_DOCKER_COMMANDS \
--v $PWD:/root/src \
+-v $PWD:/current/src/ \
 -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix \
 -v /run/desktop/mnt/host/wslg:/mnt/wslg \
 -v google-chrome-cache:/root/.cache/google-chrome \
 -v google-chrome-config:/root/.config/google-chrome %EXTRA_DOCKER_COMMANDS% \
--w /root/src \
+-w /current/src/ \
 oobdev/google-chrome google-chrome --no-sandbox $@
 
 LAST_ERROR=$?
