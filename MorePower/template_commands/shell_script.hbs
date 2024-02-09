@@ -7,12 +7,17 @@ fi
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 {{#if docker_file }}
-docker build -t {{ container }} -f {{ docker_file }} "$SCRIPT_ROOT"
+docker build ^
+--tag {{ container }} \
+--file {{ docker_file }} \
+"$SCRIPT_ROOT"
 {{/if}}
 {{#each create_volumes}}
 docker volume create {{@key}} > /dev/null 2>&1
 {{/each}}
-docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+docker run --rm $EXTRA_DOCKER_COMMANDS \
+--interactive \
+--tty \
 {{#each volumes}}
 -v {{@key}}:{{this}} \
 {{/each}}
@@ -22,7 +27,10 @@ docker run --rm -it $EXTRA_DOCKER_COMMANDS \
 {{#each ports}}
 -p {{@key}}:{{this}} \
 {{/each}}
-{{ container }} {{ command }} $@
+{{#each extra_parameters}}
+{{{this}}} \
+{{/each}}
+{{ container }} {{{ command }}} $@
 
 LAST_ERROR=$?
 

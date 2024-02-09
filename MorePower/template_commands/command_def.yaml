@@ -187,5 +187,25 @@ platforms:
   - tensorflow: ""
     ports:
     - 8888: 8888
+  - tensorflow-gpu: ""
+    ports:
+    - 8888: 8888
+    extra_parameters:
+    - --gpus all
   - tensorflow-bash: bash
   
+- name: tensorflow-intel
+  container: intel/intel-optimized-tensorflow
+  working_directory: /tensorflow/src/
+  volumes:
+  - CURRENT_DIRECTORY: /tensorflow/src/
+    no_create: true
+  - tensorflow-keras-models: /keras/
+  - tensorflow-keras-temp: /tmp/.keras/
+  - tensorflow-root: /root/
+  - tensorflow-usr: /usr/
+  commands:
+  - tensorflow-intel: "jupyter lab --ip=0.0.0.0 --allow-root --no-browser"
+    ports:
+      - 8888: 8888
+  - tensorflow-intel-bash: bash

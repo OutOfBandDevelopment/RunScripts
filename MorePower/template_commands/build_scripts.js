@@ -3,8 +3,7 @@ const yaml = require('js-yaml');
 const Handlebars = require('handlebars');
 const os = require('os');
 
-console.log('Hostname:', os.hostname());
-console.log('Operating System Platform:', os.platform());
+console.log(`Hostname: ${os.hostname()} OS: ${os.platform()}`);
 
 const script_path = os.platform() === 'win32' ? process.cwd() + "\\..\\..\\" : "/usr/src/templates/";
 
@@ -18,7 +17,7 @@ function buildPurgeAll(input, purge_commands) {
   const script_out_file = `purge-all${input.scriptExtension}`;
   console.log(`---: ${script_out_file} :---------------------------------------`);
   const filename = `${script_path}${script_out_file}`;
-  console.log(`sourceData: purge-all: ${filename}`, purge_commands);
+  console.log(`sourceData: purge-all: ${filename}`); //, purge_commands);
 
   fs.writeFileSync(filename, result);
 }
@@ -29,7 +28,7 @@ function buildPurgeScript(input, platform, sourceData, template, script_path) {
   const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
   console.log(`---: ${script_out_file} :---------------------------------------`);
   const filename = `${script_path}${script_out_file}`;
-  console.log(`sourceData: ${sourceData.command_file}: ${filename}`, sourceData);
+  console.log(`sourceData: ${sourceData.command_file}: ${filename}`); //, sourceData);
 
   const result = template(sourceData);
   //console.log(filename, result);
@@ -50,6 +49,7 @@ function buildCommandScripts(input, platform, template, script_path) {
     sourceData.create_volumes = {};
     sourceData.volumes = {};
     sourceData.ports = {};
+    sourceData.extra_parameters = {};
 
     for (const [idx, volume] of Object.entries(platform.volumes)) {
 
@@ -82,11 +82,25 @@ function buildCommandScripts(input, platform, template, script_path) {
         }
       }
     }
+    
+    // console.log(`>>>>> platform ${platform.name}:${sourceData.command_file}`,platform);
+    // console.log(`>>>>> command ${platform.name}:${sourceData.command_file}`,command);
+    if ('extra_parameters' in platform) {
+      for (const [idx, obj] of Object.entries(platform.extra_parameters)) {
+        sourceData.extra_parameters[idx] = obj;
+      }
+    }
+    if ('extra_parameters' in command) {
+      for (const [idx, obj] of Object.entries(command.extra_parameters)) {
+        sourceData.extra_parameters[idx] = obj;
+      }
+    }
+    console.log(`>>>>> sourceData ${platform.name}:${sourceData.command_file}`,  sourceData );
 
     const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
     console.log(`---: ${script_out_file} :---------------------------------------`);
     const filename = `${script_path}${script_out_file}`;
-    console.log(`sourceData: ${sourceData.command_file}: ${filename}`, sourceData);
+    //console.log(`sourceData: ${sourceData.command_file}: ${filename}`, sourceData);
 
     const result = template(sourceData);
     //console.log(filename, result);

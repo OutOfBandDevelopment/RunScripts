@@ -9,7 +9,7 @@ SET SCRIPT_ROOT=%~dp0
 docker build ^
 --tag {{ container }} ^
 --file {{ docker_file }} ^
-"%SCRIPT_ROOT%"
+%SCRIPT_ROOT%
 {{/if}}
 {{#each create_volumes}}
 docker volume create {{@key}} >NUL 2>&1
@@ -26,7 +26,10 @@ docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 {{#each ports}}
 --publish {{@key}}:{{this}} ^
 {{/each}}
-{{ container }} {{ command }} %*
+{{#each extra_parameters}}
+{{{this}}} ^
+{{/each}}
+{{ container }} {{{ command }}} %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 
