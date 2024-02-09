@@ -11,6 +11,12 @@ function deepClone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
+function fixLineEndings(input, content) {
+  //return content;
+  //return content.split(/\r?\n/).map(f=>f + input.lineEnding).join('').trim();
+  return content.split(/\r?\n/).join(input.lineEnding);
+}
+
 function buildPurgeAll(input, purge_commands) {
   const result = purge_commands.map(m => (input.isDosPaths ? 'CALL ' : '') + m).join(os.platform() === 'win32' ? '\r\n' : '\n');
 
@@ -19,7 +25,7 @@ function buildPurgeAll(input, purge_commands) {
   const filename = `${script_path}${script_out_file}`;
   console.log(`sourceData: purge-all: ${filename}`); //, purge_commands);
 
-  fs.writeFileSync(filename, result);
+  fs.writeFileSync(filename, fixLineEndings(input, result));
 }
 
 function buildPurgeScript(input, platform, sourceData, template, script_path) {
@@ -32,7 +38,7 @@ function buildPurgeScript(input, platform, sourceData, template, script_path) {
 
   const result = template(sourceData);
   //console.log(filename, result);
-  fs.writeFileSync(filename, result);
+  fs.writeFileSync(filename, fixLineEndings(input, result));
 
   return script_out_file;
 };
@@ -82,7 +88,7 @@ function buildCommandScripts(input, platform, template, script_path) {
         }
       }
     }
-    
+
     // console.log(`>>>>> platform ${platform.name}:${sourceData.command_file}`,platform);
     // console.log(`>>>>> command ${platform.name}:${sourceData.command_file}`,command);
     if ('extra_parameters' in platform) {
@@ -95,7 +101,7 @@ function buildCommandScripts(input, platform, template, script_path) {
         sourceData.extra_parameters[idx] = obj;
       }
     }
-    console.log(`>>>>> sourceData ${platform.name}:${sourceData.command_file}`,  sourceData );
+    console.log(`>>>>> sourceData ${platform.name}:${sourceData.command_file}`, sourceData);
 
     const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
     console.log(`---: ${script_out_file} :---------------------------------------`);
@@ -104,7 +110,7 @@ function buildCommandScripts(input, platform, template, script_path) {
 
     const result = template(sourceData);
     //console.log(filename, result);
-    fs.writeFileSync(filename, result);
+    fs.writeFileSync(filename, fixLineEndings(input, result));
   });
   return sourceData;
 }
@@ -149,23 +155,25 @@ function scriptBuilder(
 
 // build batch files
 scriptBuilder({
-  'templateData': 'command_def.yaml',
-  'templateSource': 'command_script.hbs',
-  'scriptRootVariable': '%SCRIPT_ROOT%',
-  'isDosPaths': true,
-  'currentPathVariable': '%cd%',
-  'scriptExtension': '.bat',
-  'purgeTemplateSource': 'purge_script.hbs'
+  templateData: 'command_def.yaml',
+  templateSource: 'command_script.hbs',
+  scriptRootVariable: '%SCRIPT_ROOT%',
+  isDosPaths: true,
+  currentPathVariable: '%cd%',
+  scriptExtension: '.bat',
+  purgeTemplateSource: 'purge_script.hbs',
+  lineEnding: '\r\n'
 });
 
 // build bash files
 scriptBuilder({
-  'templateData': 'command_def.yaml',
-  'templateSource': 'shell_script.hbs',
-  'scriptRootVariable': '$SCRIPT_ROOT/',
-  'isDosPaths': false,
-  'currentPathVariable': '$PWD',
-  'scriptExtension': '',
-  'purgeTemplateSource': 'purge_script.hbs'
+  templateData: 'command_def.yaml',
+  templateSource: 'shell_script.hbs',
+  scriptRootVariable: '$SCRIPT_ROOT/',
+  isDosPaths: false,
+  currentPathVariable: '$PWD',
+  scriptExtension: '',
+  purgeTemplateSource: 'purge_script.hbs',
+  lineEnding: '\n'
 });
 
