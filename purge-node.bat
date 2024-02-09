@@ -1,3 +1,4 @@
+SET SCRIPT_ROOT=%~dp0
 docker volume remove node-home
 docker volume remove node-usr-local-bin
 docker volume remove node-usr-local-lib-node_modules

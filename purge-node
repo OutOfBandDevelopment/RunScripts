@@ -1,3 +1,4 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker volume remove node-home
 docker volume remove node-usr-local-bin
 docker volume remove node-usr-local-lib-node_modules

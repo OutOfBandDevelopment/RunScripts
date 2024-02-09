@@ -1,0 +1,8 @@
+SET SCRIPT_ROOT=%~dp0
+{{#if docker_file }}
+docker build --tag {{ container }} --file {{ docker_file }} %SCRIPT_ROOT%
+{{/if}}
+{{#each create_volumes}}
+docker volume create {{@key}}
+{{/each}}
+docker pull {{ container }}

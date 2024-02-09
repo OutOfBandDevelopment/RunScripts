@@ -1,0 +1,5 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume create dotnet-root-dotnet
+docker volume create dotnet-local-nuget
+docker volume create dotnet-nuget
+docker pull mcr.microsoft.com/dotnet/sdk

@@ -1,0 +1,5 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume create node-home
+docker volume create node-usr-local-bin
+docker volume create node-usr-local-lib-node_modules
+docker pull node:latest

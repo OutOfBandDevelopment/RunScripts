@@ -1,0 +1,4 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume create ruby-root-local
+docker volume create ruby-usr-local
+docker pull ruby:latest

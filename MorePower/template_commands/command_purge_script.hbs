@@ -1,0 +1,5 @@
+SET SCRIPT_ROOT=%~dp0
+{{#each create_volumes}}
+docker volume remove {{@key}}
+{{/each}}
+docker image remove {{ container }} 

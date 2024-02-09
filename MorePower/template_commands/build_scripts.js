@@ -17,6 +17,33 @@ function fixLineEndings(input, content) {
   return content.split(/\r?\n/).join(input.lineEnding);
 }
 
+function buildPullAll(input, pull_commands) {
+  const result = pull_commands.map(m => (input.isDosPaths ? 'CALL ' : '') + m).join(os.platform() === 'win32' ? '\r\n' : '\n');
+
+  const script_out_file = `pull-all${input.scriptExtension}`;
+  console.log(`---: ${script_out_file} :---------------------------------------`);
+  const filename = `${script_path}${script_out_file}`;
+  console.log(`sourceData: pull-all: ${filename}`); //, purge_commands);
+
+  fs.writeFileSync(filename, fixLineEndings(input, result));
+}
+
+function buildPullScript(input, platform, sourceData, template, script_path) {
+  sourceData.command_file = 'pull-' + platform.name;
+
+  const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
+  console.log(`---: ${script_out_file} :---------------------------------------`);
+  const filename = `${script_path}${script_out_file}`;
+  console.log(`sourceData: ${sourceData.command_file}: ${filename}`); //, sourceData);
+
+  const result = template(sourceData);
+  //console.log(filename, result);
+  fs.writeFileSync(filename, fixLineEndings(input, result));
+
+  return script_out_file;
+};
+
+
 function buildPurgeAll(input, purge_commands) {
   const result = purge_commands.map(m => (input.isDosPaths ? 'CALL ' : '') + m).join(os.platform() === 'win32' ? '\r\n' : '\n');
 
@@ -126,8 +153,12 @@ function scriptBuilder(
 
   const purgeSource = fs.readFileSync(input.purgeTemplateSource, 'utf8');
   const purgeTemplate = Handlebars.compile(purgeSource);
+  
+  const pullSource = fs.readFileSync(input.pullTemplateSource, 'utf8');
+  const pullTemplate = Handlebars.compile(pullSource);
 
   let purge_commands = [];
+  let pull_commands = [];
 
   if (data.platforms) {
     data.platforms.forEach(platform => {
@@ -144,10 +175,13 @@ function scriptBuilder(
 
       const sourceData = buildCommandScripts(input, platform, template, script_path);
       const purge_command = buildPurgeScript(input, platform, sourceData, purgeTemplate, script_path);
+      const pull_command = buildPullScript(input, platform, sourceData, pullTemplate, script_path);
       purge_commands.push(purge_command);
+      pull_commands.push(pull_command);
     });
 
     buildPurgeAll(input, purge_commands);
+    buildPullAll(input, pull_commands);
   } else {
     console.error(`no platforms defined`, data);
   }
@@ -161,7 +195,8 @@ scriptBuilder({
   isDosPaths: true,
   currentPathVariable: '%cd%',
   scriptExtension: '.bat',
-  purgeTemplateSource: 'purge_script.hbs',
+  purgeTemplateSource: 'command_purge_script.hbs',
+  pullTemplateSource: 'command_pull_script.hbs',
   lineEnding: '\r\n'
 });
 
@@ -173,7 +208,8 @@ scriptBuilder({
   isDosPaths: false,
   currentPathVariable: '$PWD',
   scriptExtension: '',
-  purgeTemplateSource: 'purge_script.hbs',
+  purgeTemplateSource: 'shell_purge_script.hbs',
+  pullTemplateSource: 'shell_pull_script.hbs',
   lineEnding: '\n'
 });
 

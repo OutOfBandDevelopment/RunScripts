@@ -1,0 +1,4 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume create python-pip-cache
+docker volume create python-pycache
+docker pull python:latest

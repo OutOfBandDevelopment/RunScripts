@@ -1,2 +1,3 @@
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-docker image remove haskell:latest 
+docker volume create rust-rustup
+docker pull rust:latest

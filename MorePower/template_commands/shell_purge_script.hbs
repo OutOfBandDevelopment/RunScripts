@@ -1,3 +1,4 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 {{#each create_volumes}}
 docker volume remove {{@key}}
 {{/each}}

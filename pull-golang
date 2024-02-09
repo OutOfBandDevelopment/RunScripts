@@ -1,0 +1,4 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume create go-pkg
+docker volume create go-build-cache
+docker pull golang:latest
