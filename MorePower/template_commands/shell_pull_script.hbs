@@ -5,4 +5,6 @@ docker build --tag {{ container }} --file {{ docker_file }} %SCRIPT_ROOT%
 {{#each create_volumes}}
 docker volume create {{@key}}
 {{/each}}
+{{#unless docker_file }}
 docker pull {{ container }}
+{{/unless}}

@@ -1,4 +1,4 @@
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker volume remove python-pip-cache
 docker volume remove python-pycache
-docker image remove python:latest 
+docker image remove python:latest

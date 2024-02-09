@@ -1,2 +1,2 @@
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-docker image remove openjdk:latest 
+docker image remove openjdk:latest

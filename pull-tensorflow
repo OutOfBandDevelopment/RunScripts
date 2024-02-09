@@ -7,4 +7,3 @@ docker volume create tensorflow-root-cache
 docker volume create tensorflow-root-ipython
 docker volume create tensorflow-root-local
 docker volume create tensorflow-usr
-docker pull oobdev/tensorflow

@@ -1,4 +1,4 @@
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker volume remove ruby-root-local
 docker volume remove ruby-usr-local
-docker image remove ruby:latest 
+docker image remove ruby:latest

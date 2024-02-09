@@ -6,4 +6,4 @@ docker volume remove tensorflow-root-cache
 docker volume remove tensorflow-root-ipython
 docker volume remove tensorflow-root-local
 docker volume remove tensorflow-usr
-docker image remove oobdev/tensorflow 
+docker image remove oobdev/tensorflow

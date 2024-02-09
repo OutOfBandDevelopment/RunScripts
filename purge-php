@@ -1,2 +1,2 @@
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-docker image remove php:latest 
+docker image remove php:latest

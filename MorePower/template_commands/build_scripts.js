@@ -13,8 +13,9 @@ function deepClone(obj) {
 
 function fixLineEndings(input, content) {
   //return content;
+  //return content.trim();
   //return content.split(/\r?\n/).map(f=>f + input.lineEnding).join('').trim();
-  return content.split(/\r?\n/).join(input.lineEnding);
+  return content.split(/\r?\n/).join(input.lineEnding).trim();
 }
 
 function buildPullAll(input, pull_commands) {
