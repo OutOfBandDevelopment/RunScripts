@@ -29,6 +29,7 @@ docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --volume tensorflow-usr:/usr ^
 --workdir /tensorflow/src/ ^
 --publish 8888:8888 ^
+--gpus all ^
 oobdev/tensorflow  %*
 
 SET LAST_ERROR=%ERRORLEVEL%

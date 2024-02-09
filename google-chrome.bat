@@ -8,7 +8,7 @@ SET SCRIPT_ROOT=%~dp0
 docker build ^
 --tag oobdev/google-chrome ^
 --file %SCRIPT_ROOT%MorePower\DockerFile.google-chrome ^
-"%SCRIPT_ROOT%"
+%SCRIPT_ROOT%
 docker volume create google-chrome-cache >NUL 2>&1
 docker volume create google-chrome-config >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^

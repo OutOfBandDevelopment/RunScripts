@@ -8,7 +8,7 @@ SET SCRIPT_ROOT=%~dp0
 docker build ^
 --tag oobdev/tensorflow ^
 --file %SCRIPT_ROOT%MorePower\DockerFile.tensorflow-jupyterlab ^
-"%SCRIPT_ROOT%"
+%SCRIPT_ROOT%
 docker volume create tensorflow-keras-models >NUL 2>&1
 docker volume create tensorflow-keras-temp >NUL 2>&1
 docker volume create tensorflow-root-jupyter >NUL 2>&1

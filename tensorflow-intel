@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ -e "$PWD/before_docker.sh" ]; then
+    source "$PWD/before_docker.sh"
+fi
+
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker volume create tensorflow-keras-models > /dev/null 2>&1
+docker volume create tensorflow-keras-temp > /dev/null 2>&1
+docker volume create tensorflow-root > /dev/null 2>&1
+docker volume create tensorflow-usr > /dev/null 2>&1
+docker run --rm $EXTRA_DOCKER_COMMANDS \
+--interactive \
+--tty \
+-v $PWD:/tensorflow/src/ \
+-v tensorflow-keras-models:/keras/ \
+-v tensorflow-keras-temp:/tmp/.keras/ \
+-v tensorflow-root:/root/ \
+-v tensorflow-usr:/usr/ \
+-w /tensorflow/src/ \
+-p 8888:8888 \
+intel/intel-optimized-tensorflow jupyter lab --ip=0.0.0.0 --allow-root --no-browser $@
+
+LAST_ERROR=$?
+
+if [ -e "$PWD/after_docker.sh" ]; then
+    source "$PWD/after_docker.sh"
+fi
+
+exit $LAST_ERROR

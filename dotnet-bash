@@ -9,7 +9,9 @@ SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker volume create dotnet-root-dotnet > /dev/null 2>&1
 docker volume create dotnet-local-nuget > /dev/null 2>&1
 docker volume create dotnet-nuget > /dev/null 2>&1
-docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+docker run --rm $EXTRA_DOCKER_COMMANDS \
+--interactive \
+--tty \
 -v $PWD:/current/src/ \
 -v dotnet-root-dotnet:/root/.dotnet/ \
 -v dotnet-local-nuget:/root/.local/NuGet/ \

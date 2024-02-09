@@ -8,7 +8,9 @@ SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 docker volume create go-pkg > /dev/null 2>&1
 docker volume create go-build-cache > /dev/null 2>&1
-docker run --rm -it $EXTRA_DOCKER_COMMANDS \
+docker run --rm $EXTRA_DOCKER_COMMANDS \
+--interactive \
+--tty \
 -v $PWD:/current/src/ \
 -v go-pkg:/go/pkg \
 -v go-build-cache:/root/.cache/go-build \

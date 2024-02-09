@@ -10,3 +10,4 @@ purge-php-apache
 purge-google-chrome
 purge-haskell
 purge-tensorflow
+purge-tensorflow-intel

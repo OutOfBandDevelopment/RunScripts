@@ -30,6 +30,7 @@ docker run --rm $EXTRA_DOCKER_COMMANDS \
 -v tensorflow-usr:/usr \
 -w /tensorflow/src/ \
 -p 8888:8888 \
+--gpus all \
 oobdev/tensorflow  $@
 
 LAST_ERROR=$?
