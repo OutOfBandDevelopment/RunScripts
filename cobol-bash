@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ -e "$PWD/before_docker.sh" ]; then
+    source "$PWD/before_docker.sh"
+fi
+
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+docker build \
+--tag oobdev/cobol \
+--file $SCRIPT_ROOT/MorePower/DockerFile.gnucobol \
+$SCRIPT_ROOT
+docker run --rm $EXTRA_DOCKER_COMMANDS \
+--interactive \
+--tty \
+-v $PWD:/current/src/ \
+-w /current/src/ \
+oobdev/cobol bash $@
+
+LAST_ERROR=$?
+
+if [ -e "$PWD/after_docker.sh" ]; then
+    source "$PWD/after_docker.sh"
+fi
+
+exit $LAST_ERROR
