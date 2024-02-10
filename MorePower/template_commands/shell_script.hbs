@@ -7,10 +7,10 @@ fi
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 {{#if docker_file }}
-docker build ^
+docker build \
 --tag {{ container }} \
 --file {{ docker_file }} \
-"$SCRIPT_ROOT"
+$SCRIPT_ROOT
 {{/if}}
 {{#each create_volumes}}
 docker volume create {{@key}} > /dev/null 2>&1

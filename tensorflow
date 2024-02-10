@@ -6,10 +6,10 @@ fi
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-docker build ^
+docker build \
 --tag oobdev/tensorflow \
 --file $SCRIPT_ROOT/MorePower/DockerFile.tensorflow-jupyterlab \
-"$SCRIPT_ROOT"
+$SCRIPT_ROOT
 docker volume create tensorflow-keras-models > /dev/null 2>&1
 docker volume create tensorflow-keras-temp > /dev/null 2>&1
 docker volume create tensorflow-root-jupyter > /dev/null 2>&1
