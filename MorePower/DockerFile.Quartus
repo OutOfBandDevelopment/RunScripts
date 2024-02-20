@@ -1,0 +1,31 @@
+FROM ubuntu:22.04
+
+ENV DISPLAY :0
+ENV WAYLAND_DISPLAY wayland-0
+ENV XDG_RUNTIME_DIR /mnt/wslg/runtime-dir
+ENV PULSE_SERVER /mnt/wslg/PulseServer
+
+RUN apt update
+RUN apt upgrade -y
+RUN apt install wget -y
+RUN apt install libstdc++6 -y 
+RUN apt install libgtk2.0-0 -y 
+RUN apt install dpkg-dev -y
+RUN apt install python3-pip -y
+RUN apt install libtinfo5 libncurses5 -y
+RUN apt install openjdk-17-jdk -y
+
+RUN cd /tmp
+# RUN wget 
+
+# https://github.com/johanneswarwick/install-quartusweb-ubuntu
+# export DISPLAY=:0
+# export WAYLAND_DISPLAY=wayland-0
+# export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+# export PULSE_SERVER=/mnt/wslg/PulseServer
+
+RUN chmod +x FPGAs_AdaptiveSoCs_Unified_2023.2_1013_2256_Lin64.bin
+
+# CMD ["google-chrome", "--no-sandbox"] 
+
+# docker run -it --name vivado ubuntu:22.04 --volume /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix --volume /run/desktop/mnt/host/wslg:/mnt/wslg

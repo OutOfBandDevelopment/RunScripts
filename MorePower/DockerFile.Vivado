@@ -1,0 +1,57 @@
+FROM ubuntu:22.04
+
+ENV DISPLAY :0
+ENV WAYLAND_DISPLAY wayland-0
+ENV XDG_RUNTIME_DIR /mnt/wslg/runtime-dir
+ENV PULSE_SERVER /mnt/wslg/PulseServer
+
+RUN apt update
+RUN apt upgrade -y
+RUN apt install wget -y
+RUN apt install libstdc++6 -y 
+RUN apt install libgtk2.0-0 -y 
+RUN apt install dpkg-dev -y
+RUN apt install python3-pip -y
+RUN apt install libtinfo5 libncurses5 -y
+RUN apt install openjdk-17-jdk -y
+
+# https://support.xilinx.com/s/question/0D52E00006hpMixSAE/reducing-size-of-vivado-installation?language=en_US
+# https://danielmangum.com/posts/vivado-2020-x-ubuntu-20-04/
+# https://support.xilinx.com/s/article/63794?language=en_US
+
+# After running the Vivado installer on Linux you will need to install cable drivers as root.
+# If you do not install cable drivers you will not be able to connect to boards.
+RUN cd /tmp
+# RUN wget https://www.xilinx.com/member/forms/download/xef.html?filename=Xilinx_Unified_2020.3_0407_2214.tar.gz
+#RUN wget https://www.xilinx.com/member/forms/download/xef.html?filename=Xilinx_Unified_2020.1_0602_1208_Lin64.bin
+#RUN chmod +x Xilinx_Unified_2020.1_0602_1208_Lin64.bin
+#RUN ./Xilinx_Unified_2020.1_0602_1208_Lin64.bin
+
+RUN chmod +x FPGAs_AdaptiveSoCs_Unified_2023.2_1013_2256_Lin64.bin
+
+# https://github.com/microsoft/wslg/wiki/Diagnosing-%22cannot-open-display%22-type-issues-with-WSLg
+# ln -s /mnt/wslg/.X11-unix /tmp/.X11-unix 
+
+# https://www.xilinx.com/member/forms/download/xef.html?filename=Xilinx_Unified_2020.1_0602_1208.tar.gz
+# https://support.xilinx.com/s/question/0D52E00006iHj2dSAC/xilinx-unified-installer-20201-exception-in-thread-splashloadmessage-ubuntu?language=en_US
+
+# # change directory to your Vivado install, for example:
+# cd /opt/Xilinx/Vivado/2019.2
+
+# # cd into the drivers directory (the script MUST be run there)
+# cd data/xicom/cable_drivers/lin64/install_script/install_drivers
+
+# # run the cable installer with root privileges
+# sudo ./install_drivers
+ 
+
+
+# CMD ["google-chrome", "--no-sandbox"] 
+
+
+# docker run -it --name vivado ubuntu:22.04 --volume /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix --volume /run/desktop/mnt/host/wslg:/mnt/wslg
+
+# export DISPLAY=:0
+# export WAYLAND_DISPLAY=wayland-0
+# export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+# export PULSE_SERVER=/mnt/wslg/PulseServer
