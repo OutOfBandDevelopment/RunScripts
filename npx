@@ -1,10 +1,16 @@
 #!/bin/bash
 
+if [ -e "$HOME/.oobdev/RunScripts/before_all.sh" ]; then
+    . "$HOME/.oobdev/RunScripts/before_all.sh"
+fi
 if [ -e "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export SCRIPT_ROOT
+WORKING_ROOT=$(pwd)
+export WORKING_ROOT
 
 docker volume create node-home > /dev/null 2>&1
 docker volume create node-usr-local-bin > /dev/null 2>&1
@@ -12,17 +18,20 @@ docker volume create node-usr-local-lib-node_modules > /dev/null 2>&1
 docker run --rm $EXTRA_DOCKER_COMMANDS \
 --interactive \
 --tty \
--v $PWD:/current/src/ \
--v node-home:/root/ \
--v node-usr-local-bin:/usr/local/bin/ \
--v node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ \
--w /current/src/ \
+--volume $PWD:/current/src/ \
+--volume node-home:/root/ \
+--volume node-usr-local-bin:/usr/local/bin/ \
+--volume node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ \
+--workdir /current/src/ \
 node:latest npx $@
 
 LAST_ERROR=$?
 
 if [ -e "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
+fi
+if [ -e "$HOME/.oobdev/RunScripts/after_docker.sh" ]; then
+    . "$HOME/.oobdev/RunScripts/after_docker.sh"
 fi
 
 exit $LAST_ERROR

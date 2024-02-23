@@ -1,10 +1,16 @@
 #!/bin/bash
 
+if [ -e "$HOME/.oobdev/RunScripts/before_all.sh" ]; then
+    . "$HOME/.oobdev/RunScripts/before_all.sh"
+fi
 if [ -e "$PWD/before_docker.sh" ]; then
     source "$PWD/before_docker.sh"
 fi
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export SCRIPT_ROOT
+WORKING_ROOT=$(pwd)
+export WORKING_ROOT
 
 {{#if docker_file }}
 docker build \
@@ -19,13 +25,13 @@ docker run --rm $EXTRA_DOCKER_COMMANDS \
 --interactive \
 --tty \
 {{#each volumes}}
--v {{@key}}:{{this}} \
+--volume {{@key}}:{{this}} \
 {{/each}}
 {{#if working_directory}}
--w {{working_directory}} \
+--workdir {{working_directory}} \
 {{/if}}
 {{#each ports}}
--p {{@key}}:{{this}} \
+--publish {{@key}}:{{this}} \
 {{/each}}
 {{#each extra_parameters}}
 {{{this}}} \
@@ -36,6 +42,9 @@ LAST_ERROR=$?
 
 if [ -e "$PWD/after_docker.sh" ]; then
     source "$PWD/after_docker.sh"
+fi
+if [ -e "$HOME/.oobdev/RunScripts/after_docker.sh" ]; then
+    . "$HOME/.oobdev/RunScripts/after_docker.sh"
 fi
 
 exit $LAST_ERROR
