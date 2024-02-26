@@ -1,0 +1,37 @@
+FROM ubuntu:22.04
+
+ENV DISPLAY :0
+ENV WAYLAND_DISPLAY wayland-0
+ENV XDG_RUNTIME_DIR /mnt/wslg/runtime-dir
+ENV PULSE_SERVER /mnt/wslg/PulseServer
+
+RUN apt update
+RUN apt install wget -y
+
+# https://wiki.winehq.org/Ubuntu
+
+RUN dpkg --add-architecture i386 
+RUN mkdir -pm755 /etc/apt/keyrings
+RUN wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+RUN wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+
+RUN apt update
+RUN apt install --install-recommends winehq-stable -y
+RUN apt install wine wine32 winetricks -y
+# RUN apt --reinstall install ttf-mscorefonts-installer -y
+# RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections && apt install ttf-mscorefonts-installer 
+
+RUN WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
+RUN WINEARCH=win32 WINEPREFIX=~/.wine winetricks mfc40
+
+# COPY publish/awincupl.exe /tmp/awincupl.exe
+
+RUN cd /tmp
+
+# https://www.reddit.com/r/winehq/comments/18xtq2k/how_do_i_fix_dwsbc32ocx_problem_in_wine/
+# https://mike42.me/blog/2021-08-a-first-look-at-programmable-logic
+# https://askubuntu.com/questions/177192/how-do-i-create-a-32-bit-wine-prefix
+
+# CMD ["google-chrome", "--no-sandbox"] 
+
+# docker run -it --name wine --volume %cd%:/current/src/ --volume /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix --volume /run/desktop/mnt/host/wslg:/mnt/wslg oobdev/wine 
