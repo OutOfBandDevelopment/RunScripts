@@ -200,3 +200,22 @@ platforms:
   - cobc: cobc
   - cobcrun: cobcrun
   - cobol-bash: bash
+  
+- name: pytorch
+  container: tverous/pytorch-notebook
+  working_directory: /pytorch/src/
+  volumes:
+  - CURRENT_DIRECTORY: /pytorch/src/
+    no_create: true
+  - pytorch-root: /root/
+  commands:
+  - pytorch: ""
+    ports:
+    - 8888: 8888
+    - 5000: 5000
+  - pytorch-gpu: ""
+    ports:
+    - 8888: 8888
+    extra_parameters:
+    - --gpus all
+  - pytorch-bash: bash  

@@ -12,3 +12,4 @@ CALL pull-haskell.bat
 CALL pull-tensorflow.bat
 CALL pull-tensorflow-intel.bat
 CALL pull-cobol.bat
+CALL pull-pytorch.bat

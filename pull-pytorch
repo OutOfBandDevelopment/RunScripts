@@ -1,0 +1,3 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume create pytorch-root
+docker pull tverous/pytorch-notebook
