@@ -12,3 +12,4 @@ purge-haskell
 purge-tensorflow
 purge-tensorflow-intel
 purge-cobol
+purge-pytorch

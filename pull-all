@@ -12,3 +12,4 @@ pull-haskell
 pull-tensorflow
 pull-tensorflow-intel
 pull-cobol
+pull-pytorch

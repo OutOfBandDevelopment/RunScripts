@@ -12,3 +12,4 @@ CALL purge-haskell.bat
 CALL purge-tensorflow.bat
 CALL purge-tensorflow-intel.bat
 CALL purge-cobol.bat
+CALL purge-pytorch.bat
