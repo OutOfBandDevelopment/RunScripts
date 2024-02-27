@@ -12,10 +12,12 @@ export SCRIPT_ROOT
 WORKING_ROOT=$(pwd)
 export WORKING_ROOT
 
+docker volume create pytorch-root > /dev/null 2>&1
 docker run --rm $EXTRA_DOCKER_COMMANDS \
 --interactive \
 --tty \
 --volume $PWD:/pytorch/src/ \
+--volume pytorch-root:/root/ \
 --workdir /pytorch/src/ \
 tverous/pytorch-notebook bash $@
 

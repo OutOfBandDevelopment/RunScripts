@@ -8,11 +8,14 @@ IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat"
 SET SCRIPT_ROOT=%~dp0
 SET WORKING_ROOT=%CD%
 
+docker volume create pytorch-root >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
 --volume %cd%:/pytorch/src/ ^
+--volume pytorch-root:/root/ ^
 --workdir /pytorch/src/ ^
+--publish 5000:5000 ^
 --publish 8888:8888 ^
 tverous/pytorch-notebook  %*
 

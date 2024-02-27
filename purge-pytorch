@@ -1,2 +1,3 @@
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume remove pytorch-root
 docker image remove tverous/pytorch-notebook

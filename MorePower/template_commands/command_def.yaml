@@ -207,10 +207,12 @@ platforms:
   volumes:
   - CURRENT_DIRECTORY: /pytorch/src/
     no_create: true
+  - pytorch-root: /root/
   commands:
   - pytorch: ""
     ports:
     - 8888: 8888
+    - 5000: 5000
   - pytorch-gpu: ""
     ports:
     - 8888: 8888
