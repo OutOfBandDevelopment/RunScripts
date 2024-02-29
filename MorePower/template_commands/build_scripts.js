@@ -23,7 +23,7 @@ function buildPullAll(input, pull_commands) {
 
   const script_out_file = `pull-all${input.scriptExtension}`;
   console.log(`---: ${script_out_file} :---------------------------------------`);
-  const filename = `${script_path}${script_out_file}`;
+  const filename = `${script_path}base-commands/${script_out_file}`;
   console.log(`sourceData: pull-all: ${filename}`); //, purge_commands);
 
   fs.writeFileSync(filename, fixLineEndings(input, result));
@@ -34,7 +34,7 @@ function buildPullScript(input, platform, sourceData, template, script_path) {
 
   const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
   console.log(`---: ${script_out_file} :---------------------------------------`);
-  const filename = `${script_path}${script_out_file}`;
+  const filename = `${script_path}base-commands/${script_out_file}`;
   console.log(`sourceData: ${sourceData.command_file}: ${filename}`); //, sourceData);
 
   const result = template(sourceData);
@@ -50,7 +50,7 @@ function buildPurgeAll(input, purge_commands) {
 
   const script_out_file = `purge-all${input.scriptExtension}`;
   console.log(`---: ${script_out_file} :---------------------------------------`);
-  const filename = `${script_path}${script_out_file}`;
+  const filename = `${script_path}base-commands/${script_out_file}`;
   console.log(`sourceData: purge-all: ${filename}`); //, purge_commands);
 
   fs.writeFileSync(filename, fixLineEndings(input, result));
@@ -61,7 +61,7 @@ function buildPurgeScript(input, platform, sourceData, template, script_path) {
 
   const script_out_file = `${sourceData.command_file}${input.scriptExtension}`;
   console.log(`---: ${script_out_file} :---------------------------------------`);
-  const filename = `${script_path}${script_out_file}`;
+  const filename = `${script_path}base-commands/${script_out_file}`;
   console.log(`sourceData: ${sourceData.command_file}: ${filename}`); //, sourceData);
 
   const result = template(sourceData);

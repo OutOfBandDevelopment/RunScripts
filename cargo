@@ -13,11 +13,15 @@ WORKING_ROOT=$(pwd)
 export WORKING_ROOT
 
 docker volume create rust-rustup > /dev/null 2>&1
+docker volume create rust-var > /dev/null 2>&1
+docker volume create rust-usr > /dev/null 2>&1
 docker run --rm $EXTRA_DOCKER_COMMANDS \
 --interactive \
 --tty \
 --volume $PWD:/current/src/ \
 --volume rust-rustup:/usr/local/rustup/ \
+--volume rust-var:/var/ \
+--volume rust-usr:/usr/ \
 --workdir /current/src/ \
 rust:latest cargo $@
 
