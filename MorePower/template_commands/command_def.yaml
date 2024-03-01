@@ -6,6 +6,8 @@ platforms:
   - CURRENT_DIRECTORY: /current/src/
     no_create: true
   - rust-rustup: /usr/local/rustup/
+  - rust-var: /var/
+  - rust-usr: /usr/
   commands:
   - cargo: cargo
   - rust-bash: bash

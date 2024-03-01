@@ -8,7 +8,8 @@ IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat"
 SET SCRIPT_ROOT=%~dp0
 SET WORKING_ROOT=%CD%
 
-docker run --rm %EXTRA_DOCKER_COMMANDS% ^
+docker run --name java ^
+%EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
 --volume %cd%:/current/src/ ^

@@ -1,3 +1,5 @@
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker volume remove rust-rustup
+docker volume remove rust-var
+docker volume remove rust-usr
 docker image remove rust:latest
