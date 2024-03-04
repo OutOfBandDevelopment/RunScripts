@@ -4,6 +4,7 @@ docker build ^
 --file ..\DockerFile.sbert ^
 ..
 
-docker run --rm -it ^
+docker run ^
+--name sbert ^
 -p 5080:5000 ^
 oobdev/sbert
