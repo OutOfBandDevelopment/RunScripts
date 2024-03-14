@@ -2,13 +2,17 @@ FROM ubuntu:22.04
 
 # https://www.simplified.guide/jupyter-notebook/install-ubuntu
 
-RUN apt update
+RUN apt update -y
 RUN apt-get update -y
+RUN apt upgrade -y
 
 RUN apt install python3.10 -y
 RUN apt install python3.10-dbg -y
 RUN apt install python3-pip -y
 RUN pip install jupyterlab
+
+RUN pip install torch torchvision torchaudio
+RUN pip install tensorflow 
 
 RUN apt install dotnet-sdk-8.0 -y
 RUN apt install aspnetcore-runtime-8.0 -y
@@ -17,18 +21,18 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 RUN dotnet interactive jupyter install
 
-# https://heads0rtai1s.github.io/2021/02/25/gpu-setup-r-python-ubuntu/
-#RUN apt install wget -y
-#RUN cd /tmp
-#RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
-#RUN mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-#RUN wget https://developer.download.nvidia.com/compute/cuda/11.0.3/local_installers/cuda-repo-ubuntu2004-11-0-local_11.0.3-450.51.06-1_amd64.deb
-#RUN dpkg -i cuda-repo-ubuntu2004-11-0-local_11.0.3-450.51.06-1_amd64.deb
-#RUN apt-key add /var/cuda-repo-ubuntu2004-11-0-local/7fa2af80.pub
-#RUN apt update
-#RUN apt install cuda
+# RUN apt install git -y
+# RUN cd /tmp
+# RUN git clone https://github.com/SpencerPark/IJava.git
+# RUN ./gradlew installKernel
+
+RUN apt install wget -y
+RUN apt install unzip -y
+RUN apt install openjdk-21-jdk -y 
+RUN wget https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip --directory-prefix=/tmp/
+RUN unzip /tmp/ijava-1.3.0.zip -d /tmp/ijava
+RUN python3 /tmp/ijava/install.py
 
 EXPOSE 8888
 
-# jupyter lab --ip=0.0.0.0 --allow-root --no-browser --NotebookApp.token='' --NotebookApp.password=''
 ENTRYPOINT ["jupyter", "lab","--ip=0.0.0.0","--allow-root","--no-browser","--NotebookApp.token=''","--NotebookApp.password=''"]
