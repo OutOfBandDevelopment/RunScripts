@@ -12,4 +12,5 @@ docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --volume %cd%:/jupyter/src/ ^
 --workdir /jupyter/src/ ^
 --publish 8888:8888 ^
+--gpus all ^
 oobdev/jupyter  %*
