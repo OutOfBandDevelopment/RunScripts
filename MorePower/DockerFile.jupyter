@@ -43,6 +43,11 @@ RUN go install golang.org/x/tools/cmd/goimports@latest
 RUN go install golang.org/x/tools/gopls@latest
 RUN gonb --install
 
+ENV PATH=/root/.local/share/gem/ruby/3.0.0/bin:$PATH
+RUN apt update && apt install -y libtool libffi-dev ruby ruby-dev make
+RUN gem install --user-install iruby
+RUN iruby register --force
+
 
 EXPOSE 8888
 
