@@ -48,6 +48,10 @@ RUN apt update && apt install -y libtool libffi-dev ruby ruby-dev make
 RUN gem install --user-install iruby
 RUN iruby register --force
 
+RUN apt install npm -y
+RUN npm install --global tslab
+RUN tslab install --python=python3
+
 
 EXPOSE 8888
 
