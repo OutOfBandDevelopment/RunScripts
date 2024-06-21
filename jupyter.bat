@@ -8,12 +8,25 @@ IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat"
 SET SCRIPT_ROOT=%~dp0
 SET WORKING_ROOT=%CD%
 
+docker build ^
+--tag oobdev/jupyter ^
+--file %SCRIPT_ROOT%MorePower\DockerFile.jupyter ^
+%SCRIPT_ROOT%
+docker volume create jupyter-keras-models >NUL 2>&1
+docker volume create jupyter-keras-temp >NUL 2>&1
+docker volume create jupyter-root >NUL 2>&1
+docker volume create jupyter-usr >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
---workdir /current/src/ ^
-openjdk:latest bash %*
+--volume %cd%:/src/ ^
+--volume jupyter-keras-models:/keras ^
+--volume jupyter-keras-temp:/tmp/.keras ^
+--volume jupyter-root:/root/ ^
+--volume jupyter-usr:/usr ^
+--workdir /src/ ^
+--publish 8888:8888 ^
+oobdev/jupyter  %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 

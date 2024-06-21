@@ -1,0 +1,6 @@
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+docker volume remove jupyter-keras-models
+docker volume remove jupyter-keras-temp
+docker volume remove jupyter-root
+docker volume remove jupyter-usr
+docker image remove oobdev/jupyter

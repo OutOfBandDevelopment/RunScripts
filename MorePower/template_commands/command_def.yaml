@@ -221,3 +221,25 @@ platforms:
     extra_parameters:
     - --gpus all
   - pytorch-bash: bash  
+
+- name: jupyter
+  container: oobdev/jupyter 
+  docker_file: "{SCRIPT_ROOT}MorePower/DockerFile.jupyter"
+  working_directory: /src/
+  volumes:
+  - CURRENT_DIRECTORY: /src/
+    no_create: true
+  - jupyter-keras-models: /keras
+  - jupyter-keras-temp: /tmp/.keras
+  - jupyter-root: /root/
+  - jupyter-usr: /usr
+  commands:
+  - jupyter: ""
+    ports:
+    - 8888: 8888
+  - jupyter-gpu: ""
+    ports:
+    - 8888: 8888
+    extra_parameters:
+    - --gpus all
+  - jupyter-bash: bash    
