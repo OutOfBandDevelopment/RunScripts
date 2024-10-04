@@ -16,7 +16,7 @@ docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --publish 3001:3001 ^
 --publish 8080:8080 ^
 --publish 9000:9000 ^
-jhipster/jhipster  %*
+jhipster/jhipster bash %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 

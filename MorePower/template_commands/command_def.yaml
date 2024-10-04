@@ -252,4 +252,12 @@ platforms:
     no_create: true
   commands:
   - jhipster: ""
-  - jhipster-bash: bash  
+    ports:
+    - 8080: 8080
+    - 9000: 9000
+    - 3001: 3001
+  - jhipster-bash: bash 
+    ports:
+    - 8080: 8080
+    - 9000: 9000
+    - 3001: 3001 
