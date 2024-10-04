@@ -14,3 +14,4 @@ CALL pull-tensorflow-intel.bat
 CALL pull-cobol.bat
 CALL pull-pytorch.bat
 CALL pull-jupyter.bat
+CALL pull-jhipster.bat
