@@ -14,3 +14,4 @@ CALL purge-tensorflow-intel.bat
 CALL purge-cobol.bat
 CALL purge-pytorch.bat
 CALL purge-jupyter.bat
+CALL purge-jhipster.bat

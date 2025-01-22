@@ -243,3 +243,21 @@ platforms:
     extra_parameters:
     - --gpus all
   - jupyter-bash: bash    
+  
+- name: jhipster
+  container: jhipster/jhipster
+  working_directory: /src/
+  volumes:
+  - CURRENT_DIRECTORY: /src/
+    no_create: true
+  commands:
+  - jhipster: ""
+    ports:
+    - 8080: 8080
+    - 9000: 9000
+    - 3001: 3001
+  - jhipster-bash: bash 
+    ports:
+    - 8080: 8080
+    - 9000: 9000
+    - 3001: 3001 
