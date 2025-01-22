@@ -1,0 +1,1 @@
+docker run --name plantuml -d -p 8080:8080 plantuml/plantuml-server:tomcat
