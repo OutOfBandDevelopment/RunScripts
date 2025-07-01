@@ -13,7 +13,7 @@ docker volume create ruby-usr-local >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --volume ruby-root-local:/root/.local/ ^
 --volume ruby-usr-local:/usr/local/ ^
 --workdir /current/src/ ^

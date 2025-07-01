@@ -15,7 +15,7 @@ docker build ^
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --workdir /current/src/ ^
 oobdev/cobol cobc %*
 

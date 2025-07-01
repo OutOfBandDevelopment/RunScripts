@@ -14,7 +14,7 @@ docker volume create rust-usr >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --volume rust-rustup:/usr/local/rustup/ ^
 --volume rust-var:/var/ ^
 --volume rust-usr:/usr/ ^

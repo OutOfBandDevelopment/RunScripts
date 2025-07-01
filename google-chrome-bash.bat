@@ -17,7 +17,7 @@ docker volume create google-chrome-config >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --volume /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix ^
 --volume /run/desktop/mnt/host/wslg:/mnt/wslg ^
 --volume google-chrome-cache:/root/.cache/google-chrome ^

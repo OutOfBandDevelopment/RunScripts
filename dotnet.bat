@@ -14,7 +14,7 @@ docker volume create dotnet-nuget >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --volume dotnet-root-dotnet:/root/.dotnet/ ^
 --volume dotnet-local-nuget:/root/.local/NuGet/ ^
 --volume dotnet-nuget:/root/.nuget/ ^

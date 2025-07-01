@@ -13,7 +13,7 @@ docker volume create go-build-cache >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --volume go-pkg:/go/pkg ^
 --volume go-build-cache:/root/.cache/go-build ^
 --workdir /current/src/ ^

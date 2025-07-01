@@ -14,7 +14,7 @@ docker volume create node-usr-local-lib-node_modules >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --volume node-home:/root/ ^
 --volume node-usr-local-bin:/usr/local/bin/ ^
 --volume node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ ^

@@ -5,7 +5,7 @@ docker run ^
 --name torchserve ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --workdir /current/src/ ^
 --publish 7070:7070 ^
 --publish 7071:7071 ^

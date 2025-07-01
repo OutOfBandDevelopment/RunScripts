@@ -13,7 +13,7 @@ docker volume create python-pycache >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --volume python-pip-cache:/root/.cache/pip/ ^
 --volume python-pycache:/usr/local/lib/python3.12/ ^
 --workdir /current/src/ ^

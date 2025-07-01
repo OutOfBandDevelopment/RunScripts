@@ -11,7 +11,7 @@ SET WORKING_ROOT=%CD%
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
---volume %cd%:/current/src/ ^
+--volume "%cd%":/current/src/ ^
 --workdir /current/src/ ^
 openjdk:latest bash %*
 
