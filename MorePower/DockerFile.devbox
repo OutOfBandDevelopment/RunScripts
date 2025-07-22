@@ -1,0 +1,64 @@
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Base utilities
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    git \
+    gnupg \
+    software-properties-common \
+    lsb-release \
+    ca-certificates \
+    build-essential \
+    unzip \
+    apt-transport-https \
+    python3 \
+    python3-pip
+
+# Node.js (LTS)
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+    apt-get install -y nodejs
+
+# .NET 9.0 SDK
+RUN add-apt-repository ppa:dotnet/backports -y
+# apt-get update &&
+RUN apt-get install -y dotnet-sdk-9.0
+ENV PATH="/root/.dotnet:$PATH"
+ENV DOTNET_ROOT="/root/.dotnet"
+
+# Java 21
+RUN add-apt-repository ppa:openjdk-r/ppa -y && \
+    apt-get update && \
+    apt-get install -y openjdk-21-jdk
+
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+# PlatformIO
+RUN apt-get install python3.12-venv -y
+RUN python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install -U pip && \
+    /opt/venv/bin/pip install -U platformio
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Go
+ARG GO_VERSION=1.22.3
+ENV GO_VERSION=${GO_VERSION}
+RUN curl -LO https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
+    rm go${GO_VERSION}.linux-amd64.tar.gz
+ENV PATH=$PATH:/usr/local/go/bin
+
+# Rust
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+ENV PATH="/root/.cargo/bin:$PATH"
+
+# Anthropic Claude Code
+# https://docs.anthropic.com/en/docs/claude-code/setup
+RUN npm install -g @anthropic-ai/claude-code
+
+WORKDIR /current/work
+
+CMD ["/bin/bash"]
