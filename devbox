@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+# Run before_all scripts if they exist
+[ -f "$HOME/.oobdev/RunScripts/before_all.cmd" ] && bash "$HOME/.oobdev/RunScripts/before_all.cmd"
+[ -f "$HOME/.oobdev/RunScripts/before_all.bat" ] && bash "$HOME/.oobdev/RunScripts/before_all.bat"
+
+# Run before_docker scripts if they exist in current dir
+[ -f "./before_docker.cmd" ] && bash "./before_docker.cmd"
+[ -f "./before_docker.bat" ] && bash "./before_docker.bat"
+
+SCRIPT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKING_ROOT="$(pwd)"
+DOCKER_COMPOSE_SCRIPT="$SCRIPT_ROOT/MorePower/docker-compose.devbox.yml"
+
+# Use default values if environment variables are not set
+PROJECT_NAME="${PROJECT_NAME:-devbox}"
+PROJECT_SERVICE="${PROJECT_SERVICE:-devbox}"
+HOST_PWD="$WORKING_ROOT"
+
+# Run the docker-compose command
+docker-compose \
+    --project-name "$PROJECT_NAME" \
+    --file "$DOCKER_COMPOSE_SCRIPT" \
+    run \
+    --rm \
+    --env "HOST_PWD=$HOST_PWD" \
+    "$PROJECT_SERVICE" $EXTRA_DOCKER_COMMANDS
+
+LAST_ERROR=$?
+
+# Run after_docker scripts if they exist
+[ -f "./after_docker.cmd" ] && bash "./after_docker.cmd"
+[ -f "./after_docker.bat" ] && bash "./after_docker.bat"
+
+# Run after_all scripts if they exist
+[ -f "$HOME/.oobdev/RunScripts/after_all.cmd" ] && bash "$HOME/.oobdev/RunScripts/after_all.cmd"
+[ -f "$HOME/.oobdev/RunScripts/after_all.bat" ] && bash "$HOME/.oobdev/RunScripts/after_all.bat"
+
+exit $LAST_ERROR

@@ -11,10 +11,14 @@ SET DOCKER_COMPOSE_SCRIPT=%SCRIPT_ROOT%MorePower\docker-compose.devbox.yml
 IF "%PROJECT_NAME%"=="" SET PROJECT_NAME=devbox
 IF "%PROJECT_SERVICE%"=="" SET PROJECT_SERVICE=devbox
 
+SET HOST_PWD=%WORKING_ROOT%
 CALL docker-compose ^
     --project-name %PROJECT_NAME% ^
     --file "%DOCKER_COMPOSE_SCRIPT%" ^
-    run --rm %PROJECT_SERVICE%  %EXTRA_DOCKER_COMMANDS%
+    run ^
+    --rm ^
+    --env HOST_PWD=%HOST_PWD% ^
+    %PROJECT_SERVICE%  %EXTRA_DOCKER_COMMANDS%
 
 SET LAST_ERROR=%ERRORLEVEL%
 

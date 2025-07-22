@@ -5,7 +5,7 @@ services:
       dockerfile: DockerFile.devbox
     volumes:
       # Mount host project dir to /current/work
-      - .:/current/work
+      - ${HOST_PWD}:/current/work
 
       # .NET
       - dotnet-nuget-cache:/root/.nuget/packages
