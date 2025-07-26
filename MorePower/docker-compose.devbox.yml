@@ -7,39 +7,17 @@ services:
       # Mount host project dir to /current/work
       - ${HOST_PWD}:/current/work
 
-      # .NET
-      - dotnet-nuget-cache:/root/.nuget/packages
-      - dotnet-tools:/root/.dotnet/tools
-
-      # Python
-      - python-packages:/root/.local/lib/python3.10/site-packages
-      - pip-cache:/root/.cache/pip
+      # Profile
+      - root:/root
 
       # Node.js
-      - npm-cache:/root/.npm
       - npm-global-tools:/usr/local/lib/node_modules
-
-      # Maven
-      - maven-cache:/root/.m2
-
-      # Rust
-      - rust-cargo:/root/.cargo
-      - rust-rustup:/root/.rustup
-
-      # Go
-      - go-pkg:/root/go/pkg
-
+      
     stdin_open: true
     tty: true
+    ports:
+      - "${WEB_PORT:-5173}:5173"  # Will be empty unless defined
 
 volumes:
-  dotnet-nuget-cache:
-  dotnet-tools:
-  python-packages:
-  pip-cache:
-  npm-cache:
+  root:
   npm-global-tools:
-  maven-cache:
-  rust-cargo:
-  rust-rustup:
-  go-pkg:
