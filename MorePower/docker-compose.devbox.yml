@@ -16,7 +16,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "${WEB_PORT:-5173}:5173"  # Will be empty unless defined
+      - "${WEB_PORT:-5173}:${SERVER_PORT:-5173}"  # Will be empty unless defined
 
 volumes:
   root:
