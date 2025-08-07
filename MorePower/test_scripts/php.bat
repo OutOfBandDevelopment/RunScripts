@@ -4,8 +4,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
 SET CONTAINER_NAME=php-x
 
-IF EXIST "%CD%\before_docker.cmd" CALL "%CD%\before_docker.cmd"
-IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat"
+IF EXIST "%CD%\before_docker.cmd" CALL "%CD%\before_docker.cmd" %SCRIPT_NAME%
+IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat" %SCRIPT_NAME%
 SET SCRIPT_ROOT=%~dp0
 
 IF NOT "%APPLICATION_SET%"=="" (
@@ -46,8 +46,8 @@ IF NOT ERRORLEVEL 0 (
 
 SET LAST_ERROR=%ERRORLEVEL%
 
-IF EXIST "%CD%\after_docker.cmd" CALL "%CD%\after_docker.cmd"
-IF EXIST "%CD%\after_docker.bat" CALL "%CD%\after_docker.bat"
+IF EXIST "%CD%\after_docker.cmd" CALL "%CD%\after_docker.cmd" %SCRIPT_NAME%
+IF EXIST "%CD%\after_docker.bat" CALL "%CD%\after_docker.bat" %SCRIPT_NAME%
 
 :EOF
 ENDLOCAL

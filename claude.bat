@@ -10,16 +10,18 @@ IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat" %SCRIPT_NAME%
 SET SCRIPT_ROOT=%~dp0
 SET WORKING_ROOT=%CD%
 
-docker volume create go-pkg >NUL 2>&1
-docker volume create go-build-cache >NUL 2>&1
+docker volume create node-home >NUL 2>&1
+docker volume create node-usr-local-bin >NUL 2>&1
+docker volume create node-usr-local-lib-node_modules >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --interactive ^
 --tty ^
 --volume "%cd%":/current/src/ ^
---volume go-pkg:/go/pkg ^
---volume go-build-cache:/root/.cache/go-build ^
+--volume node-home:/root/ ^
+--volume node-usr-local-bin:/usr/local/bin/ ^
+--volume node-usr-local-lib-node_modules:/usr/local/lib/node_modules/ ^
 --workdir /current/src/ ^
-golang:latest go %*
+node:latest claude %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 

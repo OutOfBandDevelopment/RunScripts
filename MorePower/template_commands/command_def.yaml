@@ -84,6 +84,7 @@ platforms:
   - node-bash: bash
   - npx: npx
   - ts-node: ts-node # npm install -g ts-node typescript '@types/node'
+  - claude: claude
   
 - name: python
   container: python:latest  
