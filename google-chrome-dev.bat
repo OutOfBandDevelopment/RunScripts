@@ -10,10 +10,13 @@ IF EXIST "%CD%\before_docker.bat" CALL "%CD%\before_docker.bat" %SCRIPT_NAME%
 SET SCRIPT_ROOT=%~dp0
 SET WORKING_ROOT=%CD%
 
+PUSHD "%SCRIPT_ROOT%"
 docker build ^
 --tag oobdev/google-chrome ^
 --file %SCRIPT_ROOT%MorePower\DockerFile.google-chrome ^
-%SCRIPT_ROOT%
+.
+POPD
+
 docker volume create google-chrome-cache-dev >NUL 2>&1
 docker volume create google-chrome-config-dev >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
@@ -25,18 +28,8 @@ docker run --rm %EXTRA_DOCKER_COMMANDS% ^
 --volume google-chrome-cache-dev:/tmp/google-chrome/cache ^
 --volume google-chrome-config-dev:/tmp/google-chrome/config %EXTRA_DOCKER_COMMANDS% ^
 --workdir /current/src/ ^
---publish 9222:9222 ^
-oobdev/google-chrome google-chrome ^
-  --remote-debugging-address=0.0.0.0 ^
-  --remote-debugging-port=9222 ^
-  --no-sandbox ^
-  --disable-gpu ^
-  --disable-dev-shm-usage ^
-  --user-data-dir=/tmp/google-chrome/config ^
-  --disable-software-rasterizer ^
-  --disable-extensions %*
-  
-REM  --profile-directory=Default ^
+--publish 9222:9223 ^
+oobdev/google-chrome %*
 
 SET LAST_ERROR=%ERRORLEVEL%
 
