@@ -20,6 +20,7 @@ POPD
 docker volume create google-chrome-cache-dev >NUL 2>&1
 docker volume create google-chrome-config-dev >NUL 2>&1
 docker run --rm %EXTRA_DOCKER_COMMANDS% ^
+--name chrome-dev ^
 --interactive ^
 --tty ^
 --volume "%cd%":/current/src/ ^
