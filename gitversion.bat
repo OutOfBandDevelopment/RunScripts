@@ -1,0 +1,1 @@
+docker run --rm -v "%cd%:/repo" gittools/gitversion:latest /repo
